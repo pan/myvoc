@@ -1,0 +1,5 @@
+<% @word = Word.new %>
+<%= form_for @word do |f| %>
+  <%= f.hidden_field :word, value: params[:search] %>
+  <%= f.submit %>
+<% end %>

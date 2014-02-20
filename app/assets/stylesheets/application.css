@@ -11,3 +11,22 @@
  *= require_self
  *= require_tree .
  */
+
+#window {
+  margin-left:  5%;
+  margin-right: 5%;
+}
+#main {
+  border-left-style: solid;
+  border-right-style: solid;
+  border-top-style: dotted;
+  border-bottom-style: dotted;
+  border-width: 1px;
+  border-color: purple;
+  min-height: 77vh;
+}
+.purple-box {
+  border-style: solid;
+  border-width: 1px;
+  border-color: purple;
+}

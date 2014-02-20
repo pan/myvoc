@@ -1,27 +1,33 @@
 == README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+The my vocabulary application helps me learn English new words and phrases, as
+well as idiomatic sayings and sentences.
 
-Things you may want to cover:
+You need these things to run this application.
 
-* Ruby version
+* Ruby version: tested on 2.0.0-p353
 
 * System dependencies
+  Rails(gem) 4.0.2+ 
+  one of the ExecJS runtimes, such as therubyracer(gem)
 
-* Configuration
+* Installation and Configuration
+  rvm install ruby
+  gem install rails
+  gem install therubyracer
+  bundle install
 
 * Database creation
+  This application uses a non-sql DB Mongodb.
 
 * Database initialization
+  Edit the configuration file config/mongoid.yml
 
 * How to run the test suite
 
 * Services (job queues, cache servers, search engines, etc.)
 
 * Deployment instructions
-
-* ...
 
 
 Please feel free to use a different markup language if you do not plan to run

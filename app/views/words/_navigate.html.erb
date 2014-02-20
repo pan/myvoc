@@ -1,0 +1,26 @@
+<div class="notice">
+  <%= notice %>
+</div>
+<div class="search">
+  <%= form_tag @word, method: 'get' do %>
+    <%= text_field_tag :search, params[:search], class: "wordinput", 
+      placeholder: "search/add a word" %>
+  <% end %>
+</div>
+<div class="word-list">
+  <ul>
+<% unless @words.empty? %>
+  <% @words.each { |word| %>
+    <li class="word">
+      <%= link_to "\u{2717}", word, class: "delsym", method: :delete, 
+      title: "delete" %> 
+      <strong contenteditable="true"> <%= word.word %></strong>
+    </li>
+  <% } %>
+<% end %>
+  <%#= link_to "+", @word, method: :post, word: {word: params[:search]} %>
+<% if !@matched && params[:search] %>
+  <%= render 'form' %>
+<% end %>
+  </ul>
+</div>
