@@ -11,16 +11,17 @@
   <ul>
 <% unless @words.empty? %>
   <% @words.each { |word| %>
-    <li class="word">
+    <li class="item">
       <%= link_to "\u{2717}", word, class: "delsym", method: :delete, 
       title: "delete" %> 
-      <strong contenteditable="true"> <%= word.word %></strong>
+      <%= content_tag "span", word.word, id: word.id, class: "word" %>
     </li>
   <% } %>
 <% end %>
-  <%#= link_to "+", @word, method: :post, word: {word: params[:search]} %>
 <% if !@matched && params[:search] %>
   <%= render 'form' %>
 <% end %>
   </ul>
+</div>
+<div class="word-navi">
 </div>

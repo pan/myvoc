@@ -12,6 +12,9 @@
     list-style-type: none; 
     padding: 0;
   }
+  .word {
+    cursor: pointer;
+  }
 }
 .navigation {
   float: left;
@@ -26,5 +29,74 @@
     border: none;
     width: 10vw;
     background: none;
+  }
+}
+#dcontainer {
+  margin-left: 11vw;
+  margin-top: 3vw;
+  margin-right: 0.6vw;
+  .word {
+    color: blue;
+    text-align: center;
+/*
+@media screen and max-width:599px)
+    column-span: all;           // firefox bug 616436
+    -moz-column-span: all;
+*/
+  }
+  #darea {
+/*
+    columns: 2 auto;
+    -moz-columns: 2;              // firefox bug 698783
+    -webkit-columns: 2;
+*/
+    .dblock {
+      display: inline-block;
+      width: 37vw;
+      vertical-align: top;
+/*
+      break-inside: avoid;
+      page-break-inside: avoid;   // firefox bug 775618
+*/
+      border: dotted;
+      border-width: 1px;
+      margin-left: 1vw;
+      margin-top: 0.5vw;
+      font-family: Cursive;
+      .explanations {
+        border-top: dotted;
+        border-width: 1px;
+        .explanation {
+          .meaning {
+            color: purple;
+            display: block;
+            margin-top: 5px;
+          }
+          .example {
+            color: blue;
+            margin-top: 0;
+            margin-bottom: 0;
+          }
+          dd.sentence {
+            margin-left: 0.5em;
+          }
+          .level, .region, .usage { 
+            color: white;
+            background-color: lightblue;
+            font-family: Serif;
+            font-size: 0.7em;
+          }
+          .opposite, .synonym, .gc {
+            color: blue;
+            background-color: lightblue;
+            font-family: Serif;
+            font-size: 0.7em;
+          }
+        }
+      }
+      .part_of_speech {
+        font-style: italic;
+      }
+    }
   }
 }

@@ -4,10 +4,16 @@ class WordsController < ApplicationController
 
   def index
     @words = Word.search params[:search]
+    session[:word] = params[:search] if params[:search]
     @matched = (Word.where word: params[:search]).exists?
+    @definitions = Word.get_defs (session[:word] || 'popular')
   end
 
   def show
+    @word = Word.find(params[:id])
+    session[:word] = @word.word
+    @definitions = @word.definitions
+    render partial: 'definition', layout: false
   end
 
   def new
@@ -34,14 +40,12 @@ class WordsController < ApplicationController
       return
     end 
 
-    respond_to do |format|
-      if @word.save
-        format.html { redirect_to words_path, notice: "#{@word.word} added"}
-        format.json { render action: 'show', status: :created, location: @word }
-      else
-        format.html { redirect_to words_path, notice: @word.errors }
-        format.json { render json: @word.errors, status: :unprocessable_entity }
-      end
+    if @word.save
+      Word.init_definition @word.word
+      session[:word] = @word.word
+      redirect_to words_path, notice: "#{@word.word} added"
+    else
+      redirect_to words_path, notice: @word.errors
     end
   end
 

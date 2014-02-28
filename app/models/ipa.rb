@@ -3,9 +3,9 @@ class IPA
   include Mongoid::Timestamps
 
   field :uk
-  field :k
+  field :k, type: Array
   field :us
-  field :s
+  field :s, type: Array
 
-  embeded_in :definition
+  embedded_in :definition
 end

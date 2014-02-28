@@ -1,0 +1,43 @@
+<div id="dcontainer">
+<dt class="word"><%= session[:word] %></dt>
+<div id="darea">
+<% if @definitions %>
+<% @definitions.each do |defi| %>
+  <div class="dblock" id=<%= defi.id%>> 
+    <span class="di-head">
+      <b><span class="guided_word"><%= defi.guided %></span></b>
+      <span class="part_of_speech"><%= defi.part_of_speech %></span>
+      <span class="region"><%= defi.region %></span>
+      <span class="usage"><%= defi.usage %></span>
+      <span class="gc"><%= defi.gc%></span>
+      <span class="ipa">
+        <% if defi.ipa %>
+        <span id="uk"><%= ipastr defi.ipa.uk %></span>
+        <span id="us"><%= ipastr defi.ipa.us %></span>
+        <% end %>
+      </span>
+    </span>
+    <div class="explanations">
+      <% defi.explanations.each { |exp| %>
+      <span class="explanation">
+        <span class="meaning"><%= exp.meaning %></span>
+        <dl class="example">
+          <% exp.examples.each do |exm| %>
+            <dd class="sentence">- <%= exm.sentence %>
+              <span class="usage"><%= exm.usage %></span>
+            </dd>
+          <% end %>
+        </dl>
+        <span class="level"><%= level_name exp.level %></span>
+        <span class="synonym"><%= exp.synonym %></span>
+        <span class="opposite"><%= exp.opposite %></span>
+        <span class="region"><%= exp.region %></span>
+        <span class="gc"><%= exp.gc %></span>
+      </span>
+      <% } %>
+    </div>
+  </div>
+<% end %>
+<% end %>
+</div>
+</div>

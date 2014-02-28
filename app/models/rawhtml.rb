@@ -8,7 +8,6 @@ class Rawhtml
   belongs_to :word
 
   def self.fetch word
-    require 'camdict'
     Camdict::Client.new.html_definition(word)
   end
 

@@ -12,6 +12,11 @@
  *= require_tree .
  */
 
+body {
+  margin: 0;
+  padding: 0;
+}
+
 #window {
   margin-left:  5%;
   margin-right: 5%;
