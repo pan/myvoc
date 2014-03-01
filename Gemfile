@@ -46,4 +46,11 @@ end
 # Use debugger
 gem 'debugger', group: [:development, :test]
 
+# Cambridge dictionary client
 gem 'camdict'
+
+# jobs management
+gem 'sidekiq'
+
+# sidekiq queue monitoring
+gem 'sinatra', require: false

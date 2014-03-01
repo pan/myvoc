@@ -10,12 +10,14 @@ You need these things to run this application.
 * System dependencies
   Rails(gem) 4.0.2+ 
   one of the ExecJS runtimes, such as therubyracer(gem)
+  redis
 
 * Installation and Configuration
   rvm install ruby
   gem install rails
   gem install therubyracer
   bundle install
+  apt-get install redis-server (see redios.io for other OS)
 
 * Database creation
   This application uses a non-sql DB Mongodb.
@@ -26,6 +28,13 @@ You need these things to run this application.
 * How to run the test suite
 
 * Services (job queues, cache servers, search engines, etc.)
+  This app uses sidekiq for job queues. Launch it with,
+
+    $ bundle exec sidekiq -d
+  
+  To stop it,
+
+    $ sidekiqctl stop tmp/pids/sidekiq.pid
 
 * Deployment instructions
 

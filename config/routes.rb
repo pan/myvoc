@@ -1,3 +1,5 @@
+require 'sidekiq/web'
+
 Myvoc::Application.routes.draw do
 
   resources :words
@@ -8,6 +10,7 @@ Myvoc::Application.routes.draw do
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
   root 'words#index'
+  mount Sidekiq::Web => '/sidekiq'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

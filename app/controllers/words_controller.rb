@@ -25,23 +25,9 @@ class WordsController < ApplicationController
 
   def create
     @word = Word.new word_params
-    begin 
-      raw_definitions = Rawhtml.fetch @word.word
-      raw_definitions.each { |html_def| 
-        html_def.each_pair { |key, value|
-          @word.rawhtmls.build entry_id: key, htmldef: value
-        }
-      }
-    rescue Errno::ETIMEDOUT, Errno::ECONNREFUSED => e
-      respond_to do |format|
-        format.html { redirect_to words_path, notice: e.message }
-        format.json { render json: e.message, status: :unprocessable_entity }
-      end
-      return
-    end 
+    CamdictWorker.perform_async @word.word
 
     if @word.save
-      Word.init_definition @word.word
       session[:word] = @word.word
       redirect_to words_path, notice: "#{@word.word} added"
     else
