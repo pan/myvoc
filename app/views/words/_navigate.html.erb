@@ -2,7 +2,7 @@
   <%= notice %>
 </div>
 <div class="search">
-  <%= form_tag @word, method: 'get' do %>
+  <%= form_tag @word, method: 'get', id: 'search-form' do %>
     <%= text_field_tag :search, params[:search], class: "wordinput", 
       placeholder: "search/add a word" %>
   <% end %>

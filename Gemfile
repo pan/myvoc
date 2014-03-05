@@ -54,3 +54,5 @@ gem 'sidekiq'
 
 # sidekiq queue monitoring
 gem 'sinatra', require: false
+
+gem 'jquery-ui-rails'

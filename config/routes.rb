@@ -2,6 +2,7 @@ require 'sidekiq/web'
 
 Myvoc::Application.routes.draw do
 
+  get 'words/suggested/' => 'words#suggested'
   resources :words
 
   # The priority is based upon order of creation: first created -> highest priority.

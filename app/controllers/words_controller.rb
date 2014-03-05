@@ -52,6 +52,12 @@ class WordsController < ApplicationController
     respond_with @word
   end
 
+  def suggested
+    @words = Word.search params[:term]
+    list = @words.map {|w| w.word }
+    respond_with list
+  end
+
   private
 
   def set_word
