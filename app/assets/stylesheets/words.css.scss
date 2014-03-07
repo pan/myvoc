@@ -3,10 +3,13 @@
   text-decoration: none;
   font-size: 0.9em;
 }
+.add-word {
+  cursor: pointer;
+  color: blue;
+}
 .notice {
   font-size: 0.8em;
   color: red;
-  margin-left: 11vw;
   width: 40vw;
 }
 .word-list {

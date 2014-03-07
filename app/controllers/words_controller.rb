@@ -4,8 +4,8 @@ class WordsController < ApplicationController
 
   def index
     @words = Word.search params[:search]
-    session[:word] = params[:search] if params[:search]
     @matched = (Word.where word: params[:search]).exists?
+    session[:word] = params[:search] if @matched
     @definitions = Word.get_defs (session[:word] || 'popular')
   end
 
@@ -24,7 +24,7 @@ class WordsController < ApplicationController
   end
 
   def create
-    @word = Word.new word_params
+    @word = Word.new word: params[:search]
     CamdictWorker.perform_async @word.word
 
     if @word.save

@@ -1,4 +1,9 @@
 <nav class="navigation">
   <%= render 'navigate' %>
 </nav>
+
+<%= content_tag "span", "\u{2795}", class: "add-word", 
+  title: "add a new word" %>
+<%= content_tag "span", notice, class: "notice" %>
+
 <%= render 'definition' %>
