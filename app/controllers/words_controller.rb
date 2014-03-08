@@ -4,9 +4,11 @@ class WordsController < ApplicationController
 
   def index
     @words = Word.search params[:search]
+    @words = @words.desc(:updated_at).page params[:page]
     @matched = (Word.where word: params[:search]).exists?
     session[:word] = params[:search] if @matched
     @definitions = Word.get_defs (session[:word] || 'popular')
+    @word_count = Word.count
   end
 
   def show

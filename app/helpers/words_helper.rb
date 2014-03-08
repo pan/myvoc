@@ -14,6 +14,15 @@ module WordsHelper
     "/#{ipa}/" if ipa
   end
 
+  # how many words
+  def how_many number
+    if number < 1
+      "No word in DB" 
+    else
+      "[#{number}]"
+    end
+  end
+
   # return those fields that have a non empty value from +ha+, which may be a
   # Hash or Array
   def dry ha

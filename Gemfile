@@ -56,3 +56,6 @@ gem 'sidekiq'
 gem 'sinatra', require: false
 
 gem 'jquery-ui-rails'
+
+# paginator
+gem 'kaminari'

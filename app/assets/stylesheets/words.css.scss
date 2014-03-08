@@ -16,6 +16,7 @@
   ul {
     list-style-type: none; 
     margin-top: 0.2vh;
+    margin-bottom: 0;
     padding: 0;
   }
   .word {
@@ -24,7 +25,7 @@
 }
 .navigation {
   float: left;
-  width: 10vw;
+  width: 12vw;
   margin-left: 0.5vw;
   margin-top: 0.3vh;
 }
@@ -35,6 +36,12 @@
     border: none;
     width: 10vw;
     background: none;
+  }
+}
+.word-navi {
+  text-align: center;
+  #word-count {
+    font-size: 0.8em;
   }
 }
 #dcontainer {

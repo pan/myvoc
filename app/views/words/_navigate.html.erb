@@ -1,7 +1,7 @@
 <div class="search">
   <%= form_tag @word, method: 'get', id: 'search-form' do %>
     <%= text_field_tag :search, params[:search], class: "wordinput", 
-      placeholder: "search/add a word" %>
+      placeholder: "search/add a word", title: "Regex enabled" %>
     <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
   <% end %>
 </div>
@@ -20,4 +20,7 @@
 </ul>
 </div>
 <div class="word-navi">
+  <%= paginate @words %>
+  <%= content_tag "span", how_many(@word_count), id: "word-count", 
+    title: "total words" %>
 </div>
