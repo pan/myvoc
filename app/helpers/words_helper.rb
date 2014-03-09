@@ -23,6 +23,11 @@ module WordsHelper
     end
   end
 
+  # give current word a css class "current"
+  def current word
+    " current" if word == session[:word]
+  end
+
   # return those fields that have a non empty value from +ha+, which may be a
   # Hash or Array
   def dry ha

@@ -2,24 +2,32 @@
   <%= form_tag @word, method: 'get', id: 'search-form' do %>
     <%= text_field_tag :search, params[:search], class: "wordinput", 
       placeholder: "search/add a word", title: "Regex enabled" %>
-    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
   <% end %>
 </div>
-<div class="word-list">
-<ul>
-<% unless @words.empty? %>
-  <% @words.each { |word| %>
-    <li class="item">
-      <%= link_to "\u{2717}", word, class: "delsym", method: :delete, 
-      title: "delete" %> 
-      <%= content_tag "span", word.word, id: word.id, class: "word", 
-         title: "view its definitions" %>
+<div id="word-box">
+  <span id="word-list">
+  <% unless @words.empty? %>
+    <% @words.each { |word| %>
+      <li class="item">
+        <%= link_to "\u{2717}", word, class: "delsym", method: :delete, 
+        title: "delete" %> 
+        <span title="view its definitions" id="<%=word.id%>" 
+          class="word<%= current word.word %>"><%=word.word%>
+        </span> 
+      </li>
+    <% } %>
+  <% end %>
+  </span>
+  <span id="letter-nav">
+  <% 'a'.upto('z') do |c| %>
+    <li>
+    <%= link_to c, words_path(search: "^[#{c}#{c.upcase}]"), class: "letter",
+      title: "words beginning with letter #{c}" %>
     </li>
-  <% } %>
-<% end %>
-</ul>
+  <% end %>
+  </span>
 </div>
-<div class="word-navi">
+<div class="word-pages">
   <%= paginate @words %>
   <%= content_tag "span", how_many(@word_count), id: "word-count", 
     title: "total words" %>

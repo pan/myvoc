@@ -1,9 +1,9 @@
 <div id="dcontainer">
 <dt class="word"><%= session[:word] %></dt>
-<div id="darea">
 <% if @definitions %>
+  <div id="darea" class="<%=' twocol' if @definitions.count > 1 %>">
 <% @definitions.each do |defi| %>
-  <div class="dblock" id=<%= defi.id%>> 
+  <div class="dblock" id="<%=defi.id%>"> 
     <span class="di-head">
       <b><span class="guided_word"><%= defi.guided %></span></b>
       <span class="part_of_speech"><%= defi.part_of_speech %></span>
@@ -38,6 +38,6 @@
     </div>
   </div>
 <% end %>
+  </div>
 <% end %>
-</div>
 </div>
