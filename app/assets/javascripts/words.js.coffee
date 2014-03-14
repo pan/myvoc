@@ -37,3 +37,4 @@ $ ->
       $("#search-form").attr("method", "post")
       $("#search-form").append(hidden_token)
       $("#search-form").submit()
+

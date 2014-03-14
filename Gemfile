@@ -59,3 +59,8 @@ gem 'jquery-ui-rails'
 
 # paginator
 gem 'kaminari'
+
+# authentication
+gem 'omniauth'
+gem 'omniauth-google-oauth2'
+gem 'omniauth-github'

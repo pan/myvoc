@@ -3,6 +3,7 @@ $v-shadow: 5px;
 $blur: 5px;
 
 .banner {
+  position: relative;
   font-family: "Comic Sans MS";
   color: purple;
   text-shadow: $h-shadow $v-shadow $blur gray;
@@ -26,8 +27,70 @@ $blur: 5px;
   #text {
     font-style: italic;
   }
+  .username {
+    position: absolute;
+    bottom: 33px;
+    right: 5px;
+  }
   .bar {
     background-color: lightblue;
-    padding: 3px;
+    padding: 4px;
+    height: 20px;
+    .on-off-button {
+      float: right;
+      margin: auto;
+      width: 7vw;
+      height: 100%;
+      background-color: white;
+      border-radius: 0.9em;
+      text-shadow: none;
+      text-align: center;
+      box-shadow: 1px 1px 1px 1px gray inset;
+      font-size: 0.9em;
+      font-family: "Arial";
+      cursor: pointer;
+      .switch {
+        width: 80%;
+        height: 100%;
+        border-radius: inherit;
+      }
+      .logon {
+        float: left;
+        background-color: deepskyblue;
+        color: white;
+      }
+      .logoff {
+        float: right;
+        background-color: gainsboro;
+        color: gray;
+      }
+    }
   }
+}
+
+@mixin switch-animation ( $side1, $side2, $bgcolor1, $bgcolor2, 
+  $color1, $color2 ) {
+  from {
+    float: #{$side1};
+    background-color: #{$bgcolor1};
+    color: #{$color1};
+  }
+  to {
+    float: #{$side2};
+    background-color: #{$bgcolor2};
+    color: #{$color2};
+  }
+}
+
+@keyframes on-off-switch {
+  @include switch-animation(left, right, deepskyblue, gainsboro, white, gray)
+}
+@keyframes off-on-switch {
+  @include switch-animation(right, left, gainsboro, deepskyblue, gray, white)
+}
+.logoff-ani {
+  animation: on-off-switch 1s;
+}
+.logon-ani {
+  animation: off-on-switch 1s;
 }

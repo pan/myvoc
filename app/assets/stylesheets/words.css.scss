@@ -7,6 +7,18 @@
   color: red;
   width: 40vw;
 }
+#oauth {
+  float: right;
+  display: none;
+  margin-right: 4px;
+  width: 7vw;
+  text-align: center;
+  background-color: lightblue;
+  box-shadow: 1px 1px 3px 1px gray;
+  img {
+    margin-top: 2px;
+  }
+}
 $nav_width: 12vw;
 $nav_left: 0.5vw;
 .navigation {

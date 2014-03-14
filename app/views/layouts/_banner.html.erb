@@ -3,5 +3,17 @@
   <h1><span id="m">M</span><span id="y">y</span>
   <span id="text"> Vocabulary</span></h1>
 <% end %>
-  <div class="bar purple-box">&nbsp;</div>
+<%= content_tag "span", class: "username" do %>
+  <% if login? %>
+    <%= User.fullname(session[:user_id]) %>
+  <% end %>
+<% end %>
+  <div class="bar purple-box">&nbsp;
+    <div id="log-button" class="on-off-button">
+      <%= content_tag "span", id: "log-status", 
+        class: "#{login? ? 'switch logon': 'switch logoff'}" do %>
+        <%= login? ? "Logged on" : "Logged off" %>
+      <% end %>
+    </div>
+  </div>
 </div>

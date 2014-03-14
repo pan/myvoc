@@ -4,6 +4,11 @@ Myvoc::Application.routes.draw do
 
   get 'words/suggested/' => 'words#suggested'
   resources :words
+  controller :users do
+    get 'auth/:provider/callback' => :create
+    get 'auth/failure'  => :failure
+    get 'logout' => :logout
+  end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
