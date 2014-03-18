@@ -28,6 +28,25 @@ module WordsHelper
     " current" if word == session[:word]
   end
 
+  # convert nested Struct to Hash.
+  def struct2hash struct
+    if struct.is_a? Struct
+      ret = struct.to_h
+      ret.each_pair { |key, value| 
+        ret[key] = struct2hash value
+      }
+      ret
+    else
+      struct
+    end
+  end
+
+  # return pronunciation links in the order mp3, ogg from the hash +pron+
+  def link pron, country
+    return unless pron
+    return pron[country]["mp3"] if pron[country] && pron[country]["mp3"]
+    return pron[country]["ogg"] if pron[country] && pron[country]["ogg"]
+  end
   # return those fields that have a non empty value from +ha+, which may be a
   # Hash or Array
   def dry ha

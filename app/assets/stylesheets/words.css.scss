@@ -117,6 +117,14 @@ $nav_left: 0.5vw;
       border: dotted;
       border-width: 1px;
       font-family: Cursive;
+      .bt {
+        padding:0;
+        //border-width: 1px;
+      }
+      .ipastr {
+        font-family: Times;
+        margin: 0;
+      }
       .explanations {
         border-top: dotted;
         border-width: 1px;

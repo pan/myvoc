@@ -26,7 +26,7 @@ class WordsController < ApplicationController
   end
 
   def create
-    @word = Word.new word: params[:search]
+    @word = Word.new word: params[:search].squish
     CamdictWorker.perform_async @word.word
 
     if @word.save

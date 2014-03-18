@@ -12,8 +12,18 @@
       <span class="gc"><%= defi.gc%></span>
       <span class="ipa">
         <% if defi.ipa %>
-        <span id="uk"><%= ipastr defi.ipa.uk %></span>
-        <span id="us"><%= ipastr defi.ipa.us %></span>
+          <% if defi.ipa.uk %>
+            <%= button_tag class: "uk bt", title: 'play uk pronunciation' do %>
+              <span class="ipastr"><%= ipastr defi.ipa.uk %></span>
+              <%= audio_tag link(defi.pronunciation, "uk"), class: "ukpron" %>
+            <% end %>
+          <% end %>
+          <% if defi.ipa.us %>
+            <%= button_tag class: "us bt", title: 'play us pronunciation' do %>
+              <span class="ipastr"><%= ipastr defi.ipa.us %></span>
+              <%= audio_tag link(defi.pronunciation, "us"), class: "uspron" %>
+            <% end %>
+          <% end %>
         <% end %>
       </span>
     </span>

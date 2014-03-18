@@ -4,7 +4,7 @@ class Word
 
   field :word, type: String
 
-  has_many :rawhtmls, autosave: true
+  has_many :rawhtmls, autosave: true, dependent: :delete
   embeds_many :definitions
 
   # search all words that include +word+ when +word+ is supplied, otherwise
@@ -28,11 +28,13 @@ class Word
     w = find_by word: word
     return unless w
     excluded = ["_id", "created_at", "updated_at"]
-    defields = Definition.fields.keys - excluded - ["entry_id"]
+    defields = Definition.fields.keys - excluded - ["entry_id", "pronunciation"]
     w.rawhtmls.each { |r|
       cw = Camdict::Definition.new(word, {r.entry_id => r.htmldef})
       non_empty_fnames = defields.keep_if { |f| eval "cw.#{f}" }
       assign_code = "entry_id: r.entry_id, "
+      pronh = Helpers.struct2hash cw.pronunciation
+      assign_code += "pronunciation: pronh, "
       non_empty_fnames.each { |f| assign_code += "#{f}: cw.#{f}, "}
       assign_code = "w.definitions.new(#{assign_code})"
       defi = eval assign_code 
@@ -72,5 +74,9 @@ class Word
       end
     }
     w.save
+  end
+
+  module Helpers
+    extend WordsHelper
   end
 end
