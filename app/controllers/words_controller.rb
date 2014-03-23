@@ -26,15 +26,10 @@ class WordsController < ApplicationController
   end
 
   def create
-    @word = Word.new word: params[:search].squish
-    CamdictWorker.perform_async @word.word
-
-    if @word.save
-      session[:word] = @word.word
-      redirect_to words_path, notice: "#{@word.word} added"
-    else
-      redirect_to words_path, notice: @word.errors
-    end
+    word = params[:search].squish
+    jid = CamdictWorker.perform_async word
+    redirect_to words_path, notice: jid ? 
+      "Job(id:#{jid}) should be completed in a minute." : "Job not created."
   end
 
   def update

@@ -5,6 +5,13 @@
 <%= content_tag "span", "\u{2795}", class: "add-word", 
   title: "add a new word" %>
 <%= content_tag "span", notice, class: "notice" %>
+
+<%= form_tag uploads_upload_path, id: "words-upload", multipart: true do %>
+  <%= label_tag :list, "words list:" %>
+  <%= file_field_tag :list, accept: 'text/plan' %>
+  <%= submit_tag "upload", title: "one word or phrase on every line" %>
+<% end %>
+
 <%= content_tag "span", id: "oauth" do %>
   <%= link_to image_tag("google.png", title: 
                         "Sign in with your Google account"), "auth/google" %>

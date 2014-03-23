@@ -40,7 +40,7 @@ GEM
     bson (2.0.0)
     bson_ext (1.5.1)
     builder (3.1.4)
-    camdict (1.0.0)
+    camdict (1.0.1)
       nokogiri
     celluloid (0.15.2)
       timers (~> 1.1.0)

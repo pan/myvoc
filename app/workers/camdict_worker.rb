@@ -3,20 +3,25 @@ class CamdictWorker
 
   # retrieve the rawhtml for the +word+ and init its definition
   def perform word
-    begin 
-      @raw_definitions = Rawhtml.fetch word
-      @word = Word.find_by word: word
-      @raw_definitions.each { |html_def| 
-        html_def.each_pair { |key, value|
-          @word.rawhtmls.build entry_id: key, htmldef: value
-        }
-      }
+    @word = Word.find_by word: word
+    unless @word
+      @word = Word.new word: word
       @word.save
-    rescue Errno::ETIMEDOUT, Errno::ECONNREFUSED => e
-      logger.error "#{word} #{e.message}"
-      return
-    end 
-    Word.init_definition word
+    end
+    if @word.rawhtmls.empty?
+      @raw_definitions = Rawhtml.fetch word
+      unless @raw_definitions.empty?
+        @raw_definitions.each { |html_def| 
+          html_def.each_pair { |key, value|
+            @word.rawhtmls.build entry_id: key, htmldef: value
+          }
+        }
+        @word.save
+        Word.init_definition word
+      else
+        @word.delete
+      end
+    end
   end
 
 end

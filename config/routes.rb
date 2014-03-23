@@ -3,6 +3,7 @@ require 'sidekiq/web'
 Myvoc::Application.routes.draw do
 
   get 'words/suggested/' => 'words#suggested'
+  post 'uploads/upload'  => 'uploads#upload'
   resources :words
   controller :users do
     get 'auth/:provider/callback' => :create
