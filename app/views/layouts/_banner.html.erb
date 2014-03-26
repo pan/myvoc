@@ -11,8 +11,14 @@
   <div class="bar purple-box">&nbsp;
     <div id="log-button" class="on-off-button">
       <%= content_tag "span", id: "log-status", 
-        class: "#{login? ? 'switch logon': 'switch logoff'}" do %>
+        class: "#{login? ? 'switch on': 'switch off'}" do %>
         <%= login? ? "Logged on" : "Logged off" %>
+      <% end %>
+    </div>
+    <div id="admin-button" class="on-off-button<%= login? ? '' : ' hide' %>">
+      <%= content_tag "span", id: "admin-status", 
+        class: "switch #{admin_stat}" do %>
+          <%= "Admin #{admin_stat}" %>
       <% end %>
     </div>
   </div>

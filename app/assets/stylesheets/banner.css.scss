@@ -39,6 +39,7 @@ $blur: 5px;
     .on-off-button {
       float: right;
       margin: auto;
+      margin-left: 4px;
       width: 7vw;
       height: 100%;
       background-color: white;
@@ -54,12 +55,12 @@ $blur: 5px;
         height: 100%;
         border-radius: inherit;
       }
-      .logon {
+      .on {
         float: left;
         background-color: deepskyblue;
         color: white;
       }
-      .logoff {
+      .off{
         float: right;
         background-color: gainsboro;
         color: gray;
@@ -88,9 +89,9 @@ $blur: 5px;
 @keyframes off-on-switch {
   @include switch-animation(right, left, gainsboro, deepskyblue, gray, white)
 }
-.logoff-ani {
+.off-ani {
   animation: on-off-switch 1s;
 }
-.logon-ani {
+.on-ani {
   animation: off-on-switch 1s;
 }

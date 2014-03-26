@@ -2,11 +2,12 @@
   <%= render 'navigate' %>
 </nav>
 
-<%= content_tag "span", "\u{2795}", class: "add-word", 
+<%= content_tag "span", "\u{2795}", class: "add-word admin #{hide_admin}", 
   title: "add a new word" %>
 <%= content_tag "span", notice, class: "notice" %>
 
-<%= form_tag uploads_upload_path, id: "words-upload", multipart: true do %>
+<%= form_tag uploads_upload_path, id: "words-upload", multipart: true,
+  class: "admin #{hide_admin}" do %>
   <%= label_tag :list, "words list:" %>
   <%= file_field_tag :list, accept: 'text/plan' %>
   <%= submit_tag "upload", title: "one word or phrase on every line" %>

@@ -3,4 +3,5 @@ module UsersHelper
   def login?
     session[:user_id] ? true : false
   end
+
 end

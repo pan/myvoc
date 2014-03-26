@@ -9,6 +9,7 @@ Myvoc::Application.routes.draw do
     get 'auth/:provider/callback' => :create
     get 'auth/failure'  => :failure
     get 'logout' => :logout
+    get 'admin'  => :admin
   end
 
   # The priority is based upon order of creation: first created -> highest priority.

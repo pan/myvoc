@@ -9,8 +9,8 @@
   <% unless @words.empty? %>
     <% @words.each { |word| %>
       <li class="item">
-        <%= link_to "\u{2717}", word, class: "delsym", method: :delete, 
-        title: "delete" %> 
+      <%= link_to "\u{2717}", word, class: "delsym admin #{hide_admin}",
+        method: :delete, title: "delete" %> 
         <span title="view its definitions" id="<%=word.id%>" 
           class="word<%= current word.word %>"><%=word.word%>
         </span> 

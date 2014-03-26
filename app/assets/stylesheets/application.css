@@ -36,3 +36,6 @@ body {
   border-width: 1px;
   border-color: purple;
 }
+.hide {
+  display: none;
+}

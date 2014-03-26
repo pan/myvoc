@@ -1,17 +1,52 @@
 $ ->
-  # log on/off
-  $("#log-button").click ->
-    stat = $("#log-status")
-    logon = stat.attr("class").contains("logon")
-    if logon
+  class Switch
+    constructor: (@name) ->
+      @button = "##{@name}-button"
+      @stat = $("##{@name}-status")
+    listen: ->
+      $(@button).click =>
+        ison = @stat.attr("class").contains("on")
+        if ison
+          @turn_off()
+        else
+          @turn_on()
+    turn_off: ->
+      @stat.removeClass("on").removeClass("on-ani")
+      @stat.addClass("off-ani").addClass("off")
+    turn_on: ->
+      @stat.removeClass("off").removeClass("off-ani")
+      @stat.addClass("on-ani").addClass("on")
+
+  class LogonOff extends Switch
+    turn_off: ->
       $.get "logout"
-      stat.removeClass("logon").removeClass("logon-ani")
-      stat.addClass("logoff-ani").addClass("logoff")
-      stat.text "Logged off"
+      super
       $(".username").text("")
       $("#oauth").hide()
-    else
-      stat.removeClass("logoff").removeClass("logoff-ani")
-      stat.addClass("logon-ani").addClass("logon")
-      stat.text "Login with"
+      $("#admin-button").hide()
+      $(".admin").hide()
+    turn_on: ->
+      super
+      @stat.text "Login with"
       $("#oauth").slideDown()
+
+  class AdmSwitch extends Switch
+    reqon  = {"req": "on"}
+    reqoff = {"req":"off"}
+    turn_off: ->
+      $.get "admin.json", reqoff, (res) ->
+        $(".notice").text(res)
+      $(".admin").hide()
+      super
+      @stat.text "Admin off"
+    turn_on: ->
+      $.get "admin.json", reqon, (res) ->
+        $(".notice").text(res)
+      $(".admin").show()
+      super
+      @stat.text "Admin on"
+
+  logon_off = new LogonOff "log"
+  logon_off.listen()
+  adm_switch = new AdmSwitch "admin"
+  adm_switch.listen()
