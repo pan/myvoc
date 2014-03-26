@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_action :authenticate, only: [:logout, :admin]
 
   # login a user
   def create

@@ -1,5 +1,6 @@
 class WordsController < ApplicationController
-  before_action :set_word, only: [:show, :edit, :update, :destroy]
+  before_action :set_word, only: [:show, :destroy]
+  before_action :authenticate, only: [:create, :destroy]
   respond_to :html, :json
 
   def index
@@ -18,30 +19,11 @@ class WordsController < ApplicationController
     render partial: 'definition', layout: false
   end
 
-  def new
-    @word = Word.new
-  end
-
-  def edit
-  end
-
   def create
     word = params[:search].squish
     jid = CamdictWorker.perform_async word
     redirect_to words_path, notice: jid ? 
       "Job(id:#{jid}) should be completed in a minute." : "Job not created."
-  end
-
-  def update
-    respond_to do |format|
-      if @word.update(word_params)
-        format.html { redirect_to @word, notice: "\'#{@word.word}\' updated" }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @word.errors, status: :unprocessable_entity }
-      end
-    end
   end
 
   def destroy
