@@ -3,6 +3,8 @@ class User
   include Mongoid::Attributes::Dynamic
   include Mongoid::Timestamps
 
+  has_and_belongs_to_many :words, inverse_of: nil
+
   # find a specific user from a provider or create it when not found, or
   # update its name whenever it's been changed.
   # return the found/updated/created user
@@ -18,10 +20,17 @@ class User
     user
   end
 
-  # return user name by its db object id
-  def self.fullname oid
-    u=find oid
+  # return user name by its db object id string: +id+
+  def self.fullname id
+    u = find id
     u.name if u
+  end
+
+  # associate the user +id+ with a word instance +aword+
+  def self.associate id, aword
+    user = find id
+    user.words << aword
+    user.save
   end
 
 end

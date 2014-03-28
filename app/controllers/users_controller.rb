@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   def create
     auth = request.env["omniauth.auth"]
     @user = User.find_init_update auth
-    session[:user_id] = @user.id
+    session[:user_id] = @user.id.to_s
     redirect_to root_path
   end
 

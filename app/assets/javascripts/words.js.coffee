@@ -15,22 +15,22 @@ $ ->
     $("#search-form").submit()
 
   # autocomplete for word searching
-  $("#search").autocomplete {
+  $("#term").autocomplete {
     source: src,
     select: (event, ui) ->
       if ui.item
-        $("#search").val(ui.item.value)
+        $("#term").val(ui.item.value)
         submit_without_utf8()
     }
 
   # clean the url while searching words with enter key
-  $("#search").keydown (event) ->
+  $("#term").keydown (event) ->
     if event.which == 13
       submit_without_utf8()
 
   # add a new word by clicking the plus sign
   $(".add-word").click ->
-    if $("#search").val()
+    if $("#term").val()
       authtoken = $("meta[name=csrf-token]").attr("content")
       hidden_token = "<input name='authenticity_token' type='hidden' \
         value=#{authtoken}>"
@@ -42,6 +42,9 @@ $ ->
   $(".uk.bt").click ->
     $(".ukpron")[0].play()
 
-
   $(".us.bt").click ->
     $(".uspron")[0].play()
+
+  # handle the word delete event data
+  $(".delsym").on "ajax:success", (e, deleted, status, xhr) ->
+    $("##{deleted.id}").parent().remove()

@@ -1,15 +1,15 @@
 class WordsController < ApplicationController
   before_action :set_word, only: [:show, :destroy]
   before_action :authenticate, only: [:create, :destroy]
+  before_action :search_word, only: [:index, :suggested]
   respond_to :html, :json
 
   def index
-    @words = Word.search params[:search]
     @words = @words.desc(:updated_at).page params[:page]
-    @matched = (Word.where word: params[:search]).exists?
-    session[:word] = params[:search] if @matched
-    @definitions = Word.get_defs (session[:word] || 'popular')
-    @word_count = Word.count
+    @matched = (@words.where word: params[:term]).exists?
+    session[:word] = params[:term] if @matched
+    @definitions = Word.get_defs session[:word] || random_word
+    @word_count = @words.count
   end
 
   def show
@@ -20,24 +20,35 @@ class WordsController < ApplicationController
   end
 
   def create
-    word = params[:search].squish
-    jid = CamdictWorker.perform_async word
+    word = params[:term].squish
+    jid = CamdictWorker.perform_async session[:user_id], word
     redirect_to words_path, notice: jid ? 
       "Job(id:#{jid}) should be completed in a minute." : "Job not created."
   end
 
   def destroy
-    @word.destroy
-    respond_with @word
+    @words = User.find(session[:user_id]).words
+    @words.delete(@word)
+    render json: {id: @word.id.to_s}
   end
 
   def suggested
-    @words = Word.search params[:term]
     list = @words.map {|w| w.word }
     respond_with list
   end
 
   private
+
+  # set the words scope to those belonging to current user if logged in, 
+  # otherwise the scope is all words in DB
+  def search_word
+    if session[:user_id]
+      @words = User.find(session[:user_id]).words
+      @words = @words.search params[:term]
+    else
+      @words = Word.search params[:term]
+    end
+  end
 
   def set_word
     @word = Word.find(params[:id])
@@ -45,6 +56,12 @@ class WordsController < ApplicationController
 
   def word_params
     params.require(:word).permit(:word)
+  end
+
+  # definitions from a random word
+  def random_word
+    c = @words.count - 1
+    @words[rand(0..c)].definitions
   end
 
 end

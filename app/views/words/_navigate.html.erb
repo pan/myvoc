@@ -1,6 +1,6 @@
 <div class="search">
   <%= form_tag @word, method: 'get', id: 'search-form' do %>
-    <%= text_field_tag :search, params[:search], class: "wordinput", 
+    <%= text_field_tag :term, params[:term], class: "wordinput", 
       placeholder: "search/add a word", title: "Regex enabled" %>
   <% end %>
 </div>
@@ -10,7 +10,7 @@
     <% @words.each { |word| %>
       <li class="item">
       <%= link_to "\u{2717}", word, class: "delsym admin #{hide_admin}",
-        method: :delete, title: "delete" %> 
+        title: "delete", data:{ method: :delete, remote: true, type: 'json'} %> 
         <span title="view its definitions" id="<%=word.id%>" 
           class="word<%= current word.word %>"><%=word.word%>
         </span> 
@@ -21,7 +21,7 @@
   <span id="letter-nav">
   <% 'a'.upto('z') do |c| %>
     <li>
-    <%= link_to c, words_path(search: "^[#{c}#{c.upcase}]"), class: "letter",
+    <%= link_to c, words_path(term: "^[#{c}#{c.upcase}]"), class: "letter",
       title: "words beginning with letter #{c}" %>
     </li>
   <% end %>

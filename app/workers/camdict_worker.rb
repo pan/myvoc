@@ -1,8 +1,10 @@
 class CamdictWorker
   include Sidekiq::Worker
 
-  # retrieve the rawhtml for the +word+ and init its definition
-  def perform word
+  # retrieve the rawhtml for the +word+ and init its definition,
+  # associate the user id string +idstr+ with this +word+
+  def perform(idstr, word)
+    init_required = false
     @word = Word.find_by word: word
     unless @word
       @word = Word.new word: word
@@ -17,10 +19,18 @@ class CamdictWorker
           }
         }
         @word.save
-        Word.init_definition word
+        init_required = true
       else
         @word.delete
       end
+    elsif @word.definitions.empty?
+      init_required = true
+    else
+      User.associate(idstr, @word)
+    end
+    if init_required
+      Word.init_definition word
+      User.associate(idstr, @word)
     end
   end
 
