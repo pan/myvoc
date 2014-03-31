@@ -5,6 +5,7 @@ class CamdictWorker
   # associate the user id string +idstr+ with this +word+
   def perform(idstr, word)
     init_required = false
+    asso_needed = false
     @word = Word.find_by word: word
     unless @word
       @word = Word.new word: word
@@ -26,12 +27,10 @@ class CamdictWorker
     elsif @word.definitions.empty?
       init_required = true
     else
-      User.associate(idstr, @word)
+      asso_needed = true
     end
-    if init_required
-      Word.init_definition word
-      User.associate(idstr, @word)
-    end
+    Word.init_definition word if init_required
+    User.associate idstr, @word if asso_needed || init_required
   end
 
 end

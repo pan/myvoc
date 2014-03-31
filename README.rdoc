@@ -30,6 +30,7 @@ You need these things to run this application.
 * Services (job queues, cache servers, search engines, etc.)
   This app uses sidekiq for job queues. Launch it with,
 
+    $ export RAILS_ENV=production
     $ bundle exec sidekiq -d
   
   To stop it,

@@ -23,7 +23,7 @@ class UploadsController < ApplicationController
     if words = clean(text)
       count = 0
       words.each { |word|
-        jid = CamdictWorker.perform_async word
+        jid = CamdictWorker.perform_async session[:user_id], word
         count += 1 if jid
       }
       message = 

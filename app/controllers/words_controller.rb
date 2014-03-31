@@ -43,8 +43,13 @@ class WordsController < ApplicationController
   # otherwise the scope is all words in DB
   def search_word
     if session[:user_id]
-      @words = User.find(session[:user_id]).words
-      @words = @words.search params[:term]
+      user = User.find(session[:user_id])
+      @words = user.words if user
+      if @words
+        @words = @words.search params[:term] 
+      else
+        @words = Word.search params[:term] 
+      end
     else
       @words = Word.search params[:term]
     end
@@ -61,7 +66,8 @@ class WordsController < ApplicationController
   # definitions from a random word
   def random_word
     c = @words.count - 1
-    @words[rand(0..c)].definitions
+    i = rand(0..c)
+    @words[i].definitions if i
   end
 
 end
