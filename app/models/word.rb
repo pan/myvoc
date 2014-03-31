@@ -27,7 +27,7 @@ class Word
   def self.init_definition(word) 
     w = find_by word: word
     return unless w
-    excluded = ["_id", "created_at", "updated_at"]
+    excluded = ["_id"]
     defields = Definition.fields.keys - excluded - ["entry_id", "pronunciation"]
     w.rawhtmls.each { |r|
       cw = Camdict::Definition.new(word, {r.entry_id => r.htmldef})

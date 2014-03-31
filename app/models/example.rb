@@ -1,6 +1,5 @@
 class Example
   include Mongoid::Document
-  include Mongoid::Timestamps
 
   embedded_in :explanation
 

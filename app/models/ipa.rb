@@ -1,6 +1,5 @@
 class IPA
   include Mongoid::Document
-  include Mongoid::Timestamps
 
   field :uk
   field :k, type: Array

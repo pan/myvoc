@@ -1,6 +1,5 @@
 class Definition
   include Mongoid::Document
-  include Mongoid::Timestamps
 
   embedded_in :word
 
