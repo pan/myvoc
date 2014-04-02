@@ -67,7 +67,7 @@ class WordsController < ApplicationController
   def random_word
     c = @words.count - 1
     i = rand(0..c)
-    @words[i].definitions if i
+    @words[i].definitions if i && @words[i]
   end
 
 end
