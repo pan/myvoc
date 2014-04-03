@@ -9,7 +9,7 @@ class WordsController < ApplicationController
     @matched = (@words.where word: params[:term]).exists?
     session[:word] = params[:term] if @matched
     @definitions = Word.get_defs session[:word] || random_word
-    @word_count = @words.count
+    @word_count = Word.count_words session[:user_id]
   end
 
   def show

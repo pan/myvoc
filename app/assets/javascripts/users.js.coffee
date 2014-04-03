@@ -5,7 +5,7 @@ $ ->
       @stat = $("##{@name}-status")
     listen: ->
       $(@button).click =>
-        ison = @stat.attr("class").contains("on")
+        ison = @stat.hasClass("on")
         if ison
           @turn_off()
         else

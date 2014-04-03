@@ -16,7 +16,7 @@ module WordsHelper
 
   # how many words
   def how_many number
-    if number < 1
+    if number && number < 1
       "No word in DB" 
     else
       "[#{number}]"

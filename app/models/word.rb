@@ -76,6 +76,17 @@ class Word
     w.save
   end
 
+  # count how many words an user +uid+ has added if user's logged in, otherwise
+  # count how many words in db.
+  def self.count_words uid
+    if uid
+      u = User.find uid
+      u.words.count if u
+    else
+      count
+    end
+  end
+
   module Helpers
     extend WordsHelper
   end
