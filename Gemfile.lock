@@ -43,7 +43,7 @@ GEM
     byebug (2.7.0)
       columnize (~> 0.3)
       debugger-linecache (~> 1.2)
-    camdict (1.0.1)
+    camdict (1.0.2)
       nokogiri
     celluloid (0.15.2)
       timers (~> 1.1.0)
