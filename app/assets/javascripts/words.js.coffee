@@ -38,12 +38,10 @@ $ ->
       $("#search-form").append(hidden_token)
       $("#search-form").submit()
 
-  # play the pronunciation by clicking the ipa
-  $(".uk.bt").click ->
-    $(".ukpron")[0].play()
-
-  $(".us.bt").click ->
-    $(".uspron")[0].play()
+  # play the pronunciation by clicking the ipa button
+  $("#main").on "click", "button.bt", ->
+    pron = $(this).children("audio")[0]
+    pron.play()
 
   # handle the word delete event data
   $(".delsym").on "ajax:success", (e, deleted, status, xhr) ->
