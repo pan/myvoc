@@ -1,4 +1,5 @@
 class UploadsController < ApplicationController
+  before_action :authenticate, only: :upload
 
   def upload
     max_size = 10.megabytes
