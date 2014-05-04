@@ -2,6 +2,8 @@ ENV["RAILS_ENV"] ||= "test"
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
 
+puts "WARNING:Testing in #{ENV['RAILS_ENV']} mode" if ENV['RAILS_ENV'] != 'test'
+
 class ActiveSupport::TestCase
   # Add more helper methods to be used by all tests here...
 

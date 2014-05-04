@@ -9,7 +9,7 @@ class Word
 
   # search all words that include +word+ when +word+ is supplied, otherwise
   # return all words.
-  def self.search(word)
+  def self.search(word=nil)
     if word
       where word: Regexp.new(word)
     else
