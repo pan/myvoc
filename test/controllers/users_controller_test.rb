@@ -28,10 +28,10 @@ class UsersControllerTest < ActionController::TestCase
 
   test "can turn on/off admin" do
     user_on
-    get :admin, req: 'on'
+    get :admin, req: 'on', format: 'json'
     assert session[:admin]
     assert_response :success
-    get :admin, req: 'off'
+    get :admin, req: 'off', format: 'json'
     assert_not session[:admin]
     assert_response :success
   end

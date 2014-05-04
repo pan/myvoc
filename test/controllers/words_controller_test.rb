@@ -5,18 +5,22 @@ class WordsControllerTest < ActionController::TestCase
   test "should get index" do
     get :index
     assert_response :success
+    assert assigns(:words)
+    assert_select "title", "My Vocabulary"
+    assert_select "span", {text: "Logged off"}
   end
 
-  test "should get show word" do
+  test "should show word" do
     moon = Word.find_by word: 'moon'
     get :show, id: moon.id.to_s
     assert_template partial: '_definition'
     assert_response :success
+    assert_select ".sentence", 5
   end
 
   test "should create word" do
     login_tester
-    post :create, {term: 'automation'}, session
+    post :create, {term: 'automation'}
     assert_redirected_to words_path
   end
 

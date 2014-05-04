@@ -12,7 +12,7 @@ module ApplicationHelper
     (footer_html.join " + ").html_safe
   end
 
-  # if admin is off, return css class hide, otherwise return nothing
+  # if admin is off, return css class hide, otherwise return an empty string
   def hide_admin
     admin? ? '' : 'hide'
   end
