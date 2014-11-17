@@ -8,7 +8,8 @@ class Rawhtml
   belongs_to :word
 
   def self.fetch word
-    Camdict::Client.new.html_definition(word)
+    client = Camdict::Client.new "english-chinese-simplified"
+    client.html_definition(word)
   end
 
 end
