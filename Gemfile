@@ -67,3 +67,5 @@ gem 'kaminari'
 gem 'omniauth'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-github'
+
+gem 'unicorn'
