@@ -2,7 +2,8 @@
 source 'https://ruby.taobao.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.1.7'
+gem 'rails', '4.2.8'
+gem 'responders', '~> 2.3'
 
 # Use sqlite3 as the database for Active Record
 #gem 'sqlite3'
@@ -61,7 +62,8 @@ gem 'sinatra', require: false
 gem 'jquery-ui-rails'
 
 # paginator
-gem 'kaminari'
+gem 'kaminari-mongoid'
+gem 'kaminari-actionview'
 
 # authentication
 gem 'omniauth'
