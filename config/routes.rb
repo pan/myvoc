@@ -1,6 +1,6 @@
 require 'sidekiq/web'
 
-Myvoc::Application.routes.draw do
+Rails.application.routes.draw do
 
   get 'words/suggested/' => 'words#suggested'
   post 'uploads/upload'  => 'uploads#upload'
