@@ -5,8 +5,6 @@ source 'https://ruby.taobao.org'
 gem 'rails', '4.2.8'
 gem 'responders', '~> 2.3'
 
-# Use sqlite3 as the database for Active Record
-#gem 'sqlite3'
 gem 'mongoid'
 gem 'bson_ext'
 
@@ -30,7 +28,7 @@ gem 'turbolinks'
 gem 'jquery-turbolinks'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.0'
+# gem 'jbuilder', '~> 2.0'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
