@@ -12,7 +12,7 @@ class WordsControllerTest < ActionController::TestCase
 
   test "should show word" do
     moon = Word.find_by word: 'moon'
-    get :show, id: moon.id.to_s
+    get :show, params: { id: moon.id.to_s }
     assert_template partial: '_definition'
     assert_response :success
     assert_select ".sentence", 5
@@ -20,20 +20,20 @@ class WordsControllerTest < ActionController::TestCase
 
   test "should create word" do
     login_tester
-    post :create, {term: 'automation'}
+    post :create, params: { term: 'automation' }
     assert_redirected_to words_path
   end
 
   test "should delete word" do
     login_tester
     word = Word.find_by word: 'automation'
-    delete :destroy, id: word.id.to_s, format: 'json'
+    delete :destroy, params: { id: word.id.to_s, format: 'json' }
     assert_response :success
   end
 
   test "should suggest word" do
     session[:user_id] = nil
-    get :suggested, format: :json
+    get :suggested, params: { format: :json }
     assert_response :success
   end
 end

@@ -6,7 +6,7 @@ class LoginSearchTest < ActionDispatch::IntegrationTest
     redirect?
 
     login_tester
-    get "/words/suggested.json/", term: 'cook'
+    get "/words/suggested.json/", params: { term: 'cook' }
     assert_response :success
     css_select ".example", ".sentence"
   end
