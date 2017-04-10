@@ -13,7 +13,7 @@ class UsersController < ApplicationController
   def logout
     session[:user_id] = nil
     session[:admin] = false
-    render nothing: true
+    head :ok
   end
 
   # when a user fails to login
@@ -28,6 +28,6 @@ class UsersController < ApplicationController
     else
       session[:admin] = false
     end
-    render nothing: true
+    head :ok
   end
 end
