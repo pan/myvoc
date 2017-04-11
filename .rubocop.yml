@@ -1,0 +1,10 @@
+AllCops:
+  TargetRubyVersion: 2.3
+  Exclude:
+    - 'db/**/*'
+Rails:
+  Enabled: true
+Style/AlignParameters:
+  EnforcedStyle: with_fixed_indentation
+Style/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
