@@ -1,15 +1,11 @@
+# frozen_string_literal: true
+
+# save word raw html document
 class Rawhtml
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  field :entry_id, type: String 
-  field :htmldef, type: String
+  field :h, as: :htmldef, type: String
 
   belongs_to :word
-
-  def self.fetch word
-    client = Camdict::Client.new "english-chinese-simplified"
-    client.html_definition(word)
-  end
-
 end
