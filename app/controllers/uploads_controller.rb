@@ -9,8 +9,8 @@ class UploadsController < ApplicationController
       if uploaded.content_type != 'text/plain'
         message = "Only plain text file can be uploaded."
       elsif !(1..max_size).cover?(uploaded.size) 
-        message = "Your file size: #{uploaded.size} is not in the allowed" +
-         "range [1,10M]."
+        message = "Your file size: #{uploaded.size} is not in the allowed " \
+         'range [1,10M].'
       end
     else
       message = "You didn't select any file to upload."
