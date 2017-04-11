@@ -8,6 +8,6 @@ class LoginSearchTest < ActionDispatch::IntegrationTest
     login_tester
     get "/words/suggested.json/", params: { term: 'cook' }
     assert_response :success
-    css_select ".example", ".sentence"
+    assert css_select('.example .sentence')
   end
 end
