@@ -20,7 +20,7 @@ class Word
   # get definitions for the +word+
   def self.get_defs word
     wi = find_by word: word
-    wi.definitions if wi
+    wi.definitions
   end
 
   # initialize definitions from rawhtmls for the +word+ 

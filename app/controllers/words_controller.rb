@@ -8,7 +8,7 @@ class WordsController < ApplicationController
     @words = @words.desc(:updated_at).page params[:page]
     @matched = (@words.where word: params[:term]).exists?
     session[:word] = params[:term] if @matched
-    @definitions = Word.get_defs session[:word] || random_word
+    @definitions = session[:word] ? Word.get_defs(session[:word]) : rand_defs
     @word_count = Word.count_words session[:user_id]
   end
 
@@ -63,11 +63,9 @@ class WordsController < ApplicationController
     params.require(:word).permit(:word)
   end
 
-  # definitions from a random word
-  def random_word
-    c = @words.count - 1
-    i = rand(0..c)
-    @words[i].definitions if i && @words[i]
+  # definitions of a random word
+  def rand_defs
+    idx = rand(@words.count)
+    @words[idx]&.definitions
   end
-
 end
