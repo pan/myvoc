@@ -41,13 +41,6 @@ module WordsHelper
     end
   end
 
-  # return pronunciation links in the order mp3, ogg from the hash +pron+
-  def link pron, country
-    return unless pron
-    return pron[country]["mp3"] if pron[country] && pron[country]["mp3"]
-    return pron[country]["ogg"] if pron[country] && pron[country]["ogg"]
-  end
-
   # return those fields that have a non empty value from +ha+, which may be a
   # Hash or Array
   def dry ha
