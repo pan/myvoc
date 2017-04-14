@@ -1,23 +1,23 @@
 == README
 
-The my vocabulary application helps me learn English new words and phrases, as
+The 'My Vocabulary' application helps me learn English new words and phrases, as
 well as idiomatic sayings and sentences.
 
 You need these things to run this application.
 
-* Ruby version: tested on 2.0.0-p353
+* Ruby version: 2.3.0+
 
 * System dependencies
-  Rails(gem) 4.0.2+ 
+  Rails(gem) 5.0.2
   one of the ExecJS runtimes, such as therubyracer(gem)
   redis
 
 * Installation and Configuration
-  rvm install ruby
-  gem install rails
-  gem install therubyracer
+  install ruby
+```shell
   bundle install
   apt-get install redis-server (see redios.io for other OS)
+```
 
 * Database creation
   This application uses a non-sql DB Mongodb.
@@ -26,19 +26,16 @@ You need these things to run this application.
   Edit the configuration file config/mongoid.yml
 
 * How to run the test suite
+  populate the sample data with `RAILS_ENV=test rails r db/seeds.rb`
 
 * Services (job queues, cache servers, search engines, etc.)
   This app uses sidekiq for job queues. Launch it with,
 
     $ export RAILS_ENV=production
     $ bundle exec sidekiq -d
-  
+
   To stop it,
 
     $ sidekiqctl stop tmp/pids/sidekiq.pid
 
 * Deployment instructions
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
