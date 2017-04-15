@@ -5,3 +5,8 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+amenda = User.find_or_create_by(uid: 199, name: 'Tester Amanda',
+                                provider: 'github')
+
+test_words = %w(moon mushroom associate)
+test_words.each { |word| Word.add_asso(amenda, word) }
