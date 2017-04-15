@@ -37,10 +37,10 @@ class UploadsControllerTest < ActionController::TestCase
   private
 
   def up_file(type = 'text/plain')
-    Rack::Test::UploadedFile.new('test/fixtures/upload.txt', type)
+    Rack::Test::UploadedFile.new(file_fixture('upload.txt'), type)
   end
 
   def empty_file
-    Rack::Test::UploadedFile.new('test/fixtures/empty')
+    Rack::Test::UploadedFile.new(file_fixture('empty'))
   end
 end
