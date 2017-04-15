@@ -1,53 +1,57 @@
 <div id="dcontainer">
-<dt class="word"><%= session[:word] %></dt>
-<% if @definitions %>
-  <div id="darea" class="<%=' twocol' if @definitions.count > 1 %>">
-<% @definitions.each do |defi| %>
-  <div class="dblock" id="<%=defi.id%>"> 
-    <span class="di-head">
-      <b><span class="guided_word"><%= defi.guided %></span></b>
-      <span class="part_of_speech"><%= defi.part_of_speech %></span>
-      <span class="region"><%= defi.region %></span>
-      <span class="usage"><%= defi.usage %></span>
-      <span class="gc"><%= defi.gc%></span>
-      <span class="ipa">
-        <% if defi.ipa %>
-          <% if defi.ipa.uk %>
-            <%= button_tag class: "uk bt", title: 'play UK pronunciation' do %>
-              <span class="ipastr"><%= ipastr defi.ipa.uk %></span>
-              <%= audio_tag link(defi.pronunciation, "uk"), class: "ukpron" %>
-            <% end %>
-          <% end %>
-          <% if defi.ipa.us %>
-            <%= button_tag class: "us bt", title: 'play US pronunciation' do %>
-              <span class="ipastr"><%= ipastr defi.ipa.us %></span>
-              <%= audio_tag link(defi.pronunciation, "us"), class: "uspron" %>
-            <% end %>
-          <% end %>
+<dt class="word"><%= @word&.word %></dt>
+<% definitions = @word&.meaning %>
+<% if definitions %>
+  <span class="ipa">
+    <% if @word.ipa %>
+        <%= button_tag class: "bt", title: 'play pronunciation' do %>
+          <span class="ipastr"><%= ipastr @word.ipa %></span>
+          <%= audio_tag @word.pronunciation[:uk], class: "ukpron" %>
         <% end %>
+    <% elsif @word.ipa_h %>
+      <% if @word.ipa_h[:uk] %>
+        <%= button_tag class: "uk bt", title: 'play UK pronunciation' do %>
+          <span class="ipastr"><%= ipastr @word.ipa_h[:uk] %></span>
+          <%= audio_tag @word.pronunciation[:uk], class: "ukpron" %>
+        <% end %>
+      <% end %>
+      <% if @word.ipa_h[:us] %>
+        <%= button_tag class: "us bt", title: 'play US pronunciation' do %>
+          <span class="ipastr"><%= ipastr @word.ipa_h[:us] %></span>
+          <%= audio_tag @word.pronunciation[:us], class: "uspron" %>
+        <% end %>
+      <% end %>
+    <% end %>
+  </span>
+  <div id="darea" class="<%=' twocol' if definitions.count > 1 %>">
+    <% definitions.each do |defi| %>
+    <div class="dblock" id="<%#= defi.id %>">
+      <span class="di-head">
+        <b><span class="guided_word"><%= defi[:category] %></span></b>
+        <span class="part_of_speech"><%= defi[:pos] %></span>
       </span>
-    </span>
-    <div class="explanations">
-      <% defi.explanations.each { |exp| %>
-      <span class="explanation">
-        <span class="meaning"><%= exp.meaning %></span>
-        <dl class="example">
-          <% exp.examples.each do |exm| %>
-            <dd class="sentence">- <%= exm.sentence %>
-              <span class="usage"><%= exm.usage %></span>
-            </dd>
-          <% end %>
-        </dl>
-        <span class="level"><%= level_name exp.level %></span>
-        <span class="synonym"><%= exp.synonym %></span>
-        <span class="opposite"><%= exp.opposite %></span>
-        <span class="region"><%= exp.region %></span>
-        <span class="gc"><%= exp.gc %></span>
-      </span>
-      <% } %>
+      <div class="explanations">
+        <% defi[:sense].each do |exp| %>
+        <span class="explanation">
+          <span class="meaning"><%= exp[:meaning] %></span>
+          <dl class="example">
+            <% exp[:eg]&.each do |exm| %>
+              <dd class="sentence">- <%= exm %>
+                <span class="usage"><%#= exm[:usage] %></span>
+              </dd>
+            <% end %>
+          </dl>
+          <span class="level"><%= level_name exp[:level] %></span>
+          <span class="usage"><%= exp[:usage] %></span>
+          <span class="synonym"><%= exp[:synonym] %></span>
+          <span class="opposite"><%= exp[:opposite] %></span>
+          <span class="region"><%= exp[:region] %></span>
+          <span class="gc"><%= exp[:code] %></span>
+        </span>
+        <% end %>
+      </div>
     </div>
-  </div>
-<% end %>
+  <% end %>
   </div>
 <% end %>
 </div>
