@@ -1,93 +1,74 @@
+# frozen_string_literal: true
+
+# word model
 class Word
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  field :word, type: String
+  field :w, as: :word, type: String
+  field :m, as: :meaning, type: Array
+  field :i, as: :ipa, type: String
+  field :ih, as: :ipa_h, type: Hash
+  field :p, as: :pronunciation, type: Hash
 
-  has_many :rawhtmls, autosave: true, dependent: :delete
-  embeds_many :definitions
+  has_one :rawhtml, autosave: true, dependent: :delete
 
-  # search all words that include +word+ when +word+ is supplied, otherwise
-  # return all words.
-  def self.search(word=nil)
-    if word
-      where word: Regexp.new(word)
-    else
-      all
+  class << self
+    def i(word)
+      find_by(word: word) if exist?(word)
     end
-  end
 
-  # get definitions for the +word+
-  def self.get_defs word
-    wi = find_by word: word
-    wi.definitions
-  end
-
-  # initialize definitions from rawhtmls for the +word+ 
-  def self.init_definition(word) 
-    w = find_by word: word
-    return unless w
-    excluded = ["_id"]
-    defields = Definition.fields.keys - excluded - ["entry_id", "pronunciation"]
-    w.rawhtmls.each { |r|
-      cw = Camdict::Definition.new(word, {r.entry_id => r.htmldef})
-      non_empty_fnames = defields.keep_if { |f| eval "cw.#{f}" }
-      assign_code = "entry_id: r.entry_id, "
-      pronh = Helpers.struct2hash cw.pronunciation
-      assign_code += "pronunciation: pronh, "
-      non_empty_fnames.each { |f| assign_code += "#{f}: cw.#{f}, "}
-      assign_code = "w.definitions.new(#{assign_code})"
-      defi = eval assign_code 
-      if cw.explanations
-        cw.explanations.each { |exp|
-          fields = Explanation.fields.keys - excluded
-          non_empty_fnames = fields.keep_if { |f| eval "exp.#{f}" }
-          assign_code = "defi.explanations.new("
-          non_empty_fnames.each { |f| assign_code += "#{f}: exp.#{f}, "}
-          assign_code += ")"
-          expi = eval assign_code
-          if exp.examples
-            exp.examples.each { |exa|
-              exadata = {}
-              if exa.usage
-                exadata["usage"] = exa.usage 
-              end
-              if exa.sentence
-                exadata["sentence"] = exa.sentence
-              end
-              exai = expi.examples.new(exadata)
-            }
-          end
-        }
-      end
-      if cw.ipa
-        fields = IPA.fields.keys - excluded
-        non_empty_fnames = fields.keep_if { |f| 
-          fvalue = cw.ipa.send(f) 
-          !fvalue.empty? if fvalue 
-        }
-        data = {}
-        non_empty_fnames.each { |f| 
-          data[f] = cw.ipa.send(f)
-        }
-        defi.build_ipa data unless data.empty?
-      end
-    }
-    w.save
-  end
-
-  # count how many words an user +uid+ has added if user's logged in, otherwise
-  # count how many words in db.
-  def self.count_words uid
-    if uid
-      u = User.find uid
-      u.words.count if u
-    else
-      count
+    def exist?(word)
+      word && search(word).exists?
     end
-  end
 
-  module Helpers
-    extend WordsHelper
+    def add_asso(user, word, save_raw: false)
+      aword = exist?(word) ? i(word) : make(word, save_raw: save_raw)
+      if aword && !user.associated?(word)
+        user.associate(aword)
+        aword
+      end
+    rescue Camdict::WordNotFound
+      false
+    end
+
+    def make(wd, save_raw: false)
+      cw = Camdict::Word.new(wd)
+      nw = new word: wd
+      nw.build_rawhtml(htmldef: cw.raw_definitions) if save_raw
+      data = cw.show
+      ipa = data.delete(:ipa)
+      nw if nw.update data.merge(ipa_schema(ipa))
+    end
+
+    # search all words that include +word+ when +word+ is supplied, otherwise
+    # return all words.
+    def search(word = nil)
+      word ? where(word: Regexp.new(word)) : all
+    end
+
+    # count how many words a user +uid+ has added if user's logged in, otherwise
+    # count how many words in db.
+    def count_words(uid)
+      if uid
+        u = User.find uid
+        u.words.count if u
+      else
+        count
+      end
+    end
+
+    # initialize definitions from rawhtmls for the +word+
+    def init_definition(word); end
+
+    private
+
+    def ipa_schema(ipa)
+      if ipa.is_a?(String)
+        { ipa: ipa }
+      else
+        { ipa_h: ipa }
+      end
+    end
   end
 end
