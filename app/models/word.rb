@@ -22,8 +22,9 @@ class Word
       word && search(word).exists?
     end
 
-    def add_asso(user, word, save_raw: false)
+    def add_asso(user_id, word, save_raw: false)
       aword = exist?(word) ? i(word) : make(word, save_raw: save_raw)
+      user = User.i(user_id)
       if aword && !user.associated?(word)
         user.associate(aword)
         aword

@@ -21,7 +21,7 @@ class WordsController < ApplicationController
 
   def create
     word = params[:term].squish
-    if Word.add_asso(current_user, word)
+    if Word.add_asso(uid, word)
       session[:word] = word
       msg = "#{word} added"
     else

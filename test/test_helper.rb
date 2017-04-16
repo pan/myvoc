@@ -14,7 +14,7 @@ module ActiveSupport
 
     # login the tester with a real db user
     def login_tester
-      session[:user_id] = tester_amanda.id.to_s
+      session[:user_id] = amanda_uid
     end
 
     # give user a id and avoid db querying
@@ -24,6 +24,10 @@ module ActiveSupport
 
     def tester_amanda
       User.find_by(uid: 199)
+    end
+
+    def amanda_uid
+      tester_amanda.id.to_s
     end
   end
 end
