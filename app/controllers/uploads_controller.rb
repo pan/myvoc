@@ -1,52 +1,66 @@
+# frozen_string_literal: true
+
+# uploaded file processing by background jobs
 class UploadsController < ApplicationController
   before_action :authenticate, only: :upload
 
   def upload
-    max_size = 10.megabytes
-    message = ""
-    uploaded = params[:list]
-    if uploaded
-      if uploaded.content_type != 'text/plain'
-        message = "Only plain text file can be uploaded."
-      elsif !(1..max_size).cover?(uploaded.size) 
-        message = "Your file size: #{uploaded.size} is not in the allowed " \
-         'range [1,10M].'
-      end
-    else
-      message = "You didn't select any file to upload."
-    end
-    unless message.empty?
-      redirect_to root_path, notice: message
-      return
-    end
-    filename = uploaded.original_filename
-    text = uploaded.read
-    if words = clean(text)
-      count = 0
-      words.each { |word|
-        jid = CamdictWorker.perform_async session[:user_id], word
-        count += 1 if jid
-      }
-      message = 
-        "#{filename} uploaded, adding #{words.size} words by #{count} jobs."
-    else
-      message = "No valid word found in the uploaded file #{filename}."
-    end
-    redirect_to root_path, notice: message
+    message = verify_param
+    back_with_msg(message) && return unless message.empty?
+    back_with_msg(add_to_job)
   end
 
-  protected
+  private
 
-  # strip blank chars at the beginning or the end of a line. 
+  def back_with_msg(message)
+    redirect_to(root_path, notice: message)
+  end
+
+  def add_to_job
+    words = clean(filetext)
+    if words
+      words.each { |word| AddWordJob.perform_later(session[:user_id], word) }
+      "#{filename} uploaded, adding #{words.size} words..."
+    else
+      "No valid word found in the uploaded file #{filename}."
+    end
+  end
+
+  def filetext
+    File.read(uploaded.path, mode: 'r:bom|utf-8')
+  end
+
+  def filename
+    uploaded.original_filename
+  end
+
+  def verify_param
+    return 'Please select a text file to upload.' unless uploaded
+    if uploaded.content_type != 'text/plain'
+      'Only plain text file can be uploaded.'
+    elsif !(1..max_size).cover?(uploaded.size)
+      "File size: #{uploaded.size} is not in the allowed range [1,10M]."
+    else ''
+    end
+  end
+
+  def uploaded
+    params[:list]
+  end
+
+  def max_size
+    10.megabytes
+  end
+
+  # strip blank chars at the beginning or the end of a line.
   # delete the invalid lines if it is not started with a letter.
   # return the unique words list or nil if no valid word found
-  def clean text
-    words = text.split /\r?\n/
-    words.reject! { |w|
+  def clean(text)
+    words = text.split(/\r?\n/)
+    words.select! do |w|
       w.strip!
-      w !~ /^[a-zA-Z]/
-    }
+      w =~ /^[a-zA-Z]/
+    end
     return words.uniq unless words.empty?
   end
-
 end
