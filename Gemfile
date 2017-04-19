@@ -69,4 +69,4 @@ gem 'omniauth'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-github'
 
-gem 'unicorn'
+gem 'puma'
