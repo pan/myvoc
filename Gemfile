@@ -70,3 +70,4 @@ gem 'omniauth-google-oauth2'
 gem 'omniauth-github'
 
 gem 'puma'
+gem 'remotipart'
