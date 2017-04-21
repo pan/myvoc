@@ -12,6 +12,7 @@ class User
   # rubocop:disable Rails/HasAndBelongsToMany
   has_and_belongs_to_many :words, inverse_of: nil
   # rubocop:enable Rails/HasAndBelongsToMany
+  has_many :tasks
 
   # find a specific user from a provider or create it when not found, or
   # update its name whenever it's been changed.
