@@ -5,25 +5,27 @@ class UploadsController < ApplicationController
   before_action :authenticate, only: :upload
 
   def upload
-    message = verify_param
-    back_with_msg(message) && return unless message.empty?
-    back_with_msg(add_to_job)
+    @message = verify_param
+    @message = add_to_job if @message.empty?
   end
 
   private
 
-  def back_with_msg(message)
-    redirect_to(root_path, notice: message)
-  end
-
   def add_to_job
     words = clean(filetext)
     if words
-      words.each { |word| AddWordJob.perform_later(session[:user_id], word) }
+      upload_task(words)
       "#{filename} uploaded, adding #{words.size} words..."
     else
       "No valid word found in the uploaded file #{filename}."
     end
+  end
+
+  def upload_task(words)
+    job_ids = words.map do |word|
+      [AddWordJob.perform_later(uid, word).job_id, true]
+    end
+    current_user.tasks.create job: job_ids.to_h
   end
 
   def filetext
@@ -61,6 +63,6 @@ class UploadsController < ApplicationController
       w.strip!
       w =~ /^[a-zA-Z]/
     end
-    return words.uniq unless words.empty?
+    words.uniq unless words.empty?
   end
 end
