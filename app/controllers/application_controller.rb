@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
   # check authentication status, protect from unauthorized calls to
   # administrative methods
   def authenticate
-    render text: 'login required.' unless login?
+    render plain: 'login required.' unless login?
   end
 
   def uid
