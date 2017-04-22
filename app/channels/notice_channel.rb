@@ -4,7 +4,7 @@
 # notification service
 class NoticeChannel < ApplicationCable::Channel
   def subscribed
-    stream_from 'word:added:'
+    stream_from "word:added:#{current_user.id.to_s}"
   end
 
   def unsubscribed

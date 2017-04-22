@@ -23,7 +23,7 @@ class UploadsController < ApplicationController
 
   def upload_task(words)
     job_ids = words.map do |word|
-      [AddWordJob.perform_later(uid, word).job_id, true]
+      [AddWordJob.perform_later(uid, word).job_id, word]
     end
     current_user.tasks.create job: job_ids.to_h
   end

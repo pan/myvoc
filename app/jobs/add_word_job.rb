@@ -8,7 +8,7 @@ class AddWordJob < ApplicationJob
     user_id, word = job.arguments
     task = clean_job(user_id)
     msg = feedback(task, word)
-    ActionCable.server.broadcast 'word:added:', word: msg
+    ActionCable.server.broadcast "word:added:#{user_id}", word: msg
   end
 
   def perform(*args)

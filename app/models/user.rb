@@ -39,7 +39,7 @@ class User
 
   # get user instance from its id
   def self.i(uid)
-    find uid
+    find uid if where(id: uid).exists?
   end
 
   def associate(aword)

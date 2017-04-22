@@ -45,6 +45,7 @@ $ ->
       $(".admin").show()
       super
       @stat.text "Admin on"
+      App.notice = new App.NoticeChannel
 
   logon_off = new LogonOff "log"
   logon_off.listen()

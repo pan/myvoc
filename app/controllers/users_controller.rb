@@ -5,13 +5,13 @@ class UsersController < ApplicationController
   def create
     auth = request.env["omniauth.auth"]
     @user = User.find_init_update auth
-    session[:user_id] = @user.id.to_s
+    cookies.signed[:user_id] = session[:user_id] = @user.id.to_s
     redirect_to root_path
   end
 
   # logout a user by deleting its session user id
   def logout
-    session[:user_id] = nil
+    cookies.signed[:user_id] = session[:user_id] = nil
     session[:admin] = false
     head :ok
   end
