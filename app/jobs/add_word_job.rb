@@ -6,9 +6,9 @@ class AddWordJob < ApplicationJob
 
   after_perform do |job|
     user_id, word = job.arguments
-    task = clean_job(user_id)
-    msg = feedback(task, word)
-    ActionCable.server.broadcast "word:added:#{user_id}", word: msg
+    task = clean_job
+    ActionCable.server.broadcast to_queue(user_id), word: word
+    clean_task(user_id, task)
   end
 
   def perform(*args)
@@ -18,19 +18,20 @@ class AddWordJob < ApplicationJob
 
   private
 
-  def clean_job(user_id)
-    User.i(user_id).tasks.each do |t|
-      return t if t.remove(job_id)
-    end
-    false
+  def clean_job
+    job = Job.find_by(job_id: job_id)
+    task = job.task
+    job.destroy
+    task
   end
 
-  def feedback(task, word)
-    if task && task.done?
-      task.destroy
-      'done'
-    else
-      word
-    end
+  def clean_task(user_id, task)
+    return unless task.reload.done?
+    task.destroy
+    ActionCable.server.broadcast to_queue(user_id), word: 'done'
+  end
+
+  def to_queue(user_id)
+    "word:added:#{user_id}"
   end
 end

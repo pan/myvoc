@@ -14,18 +14,11 @@ class UploadsController < ApplicationController
   def add_to_job
     words = clean(filetext)
     if words
-      upload_task(words)
+      Task.upload(current_user, words)
       "#{filename} uploaded, adding #{words.size} words..."
     else
       "No valid word found in the uploaded file #{filename}."
     end
-  end
-
-  def upload_task(words)
-    job_ids = words.map do |word|
-      [AddWordJob.perform_later(uid, word).job_id, word]
-    end
-    current_user.tasks.create job: job_ids.to_h
   end
 
   def filetext
