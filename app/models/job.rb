@@ -7,4 +7,5 @@ class Job
 
   belongs_to :task
   field :job_id
+  field :word
 end

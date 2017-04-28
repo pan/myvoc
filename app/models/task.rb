@@ -20,7 +20,7 @@ class Task
     uid = user.id.to_s
     words.each do |word|
       bg_job = AddWordJob.perform_later(uid, word)
-      task.jobs.create(job_id: bg_job.job_id)
+      task.jobs.create(job_id: bg_job.job_id, word: word)
     end
   end
 end
