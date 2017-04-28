@@ -19,7 +19,7 @@ class Word
     end
 
     def exist?(word)
-      word && search(word).exists?
+      word && where(word: word).exists?
     end
 
     def add_asso(user_id, word, save_raw: false)
