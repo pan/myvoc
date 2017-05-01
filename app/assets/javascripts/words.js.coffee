@@ -1,6 +1,6 @@
 $ ->
   # click a word showing its definition
-  $("li .word").click ->
+  $(document).on 'click', 'li .word', ->
     wid = this.id
     $(".current").removeClass("current")
     $(this).addClass("current")
@@ -15,13 +15,14 @@ $ ->
     $("#search-form").submit()
 
   # autocomplete for word searching
-  $("#term").autocomplete {
-    source: src,
-    select: (event, ui) ->
-      if ui.item
-        $("#term").val(ui.item.value)
-        submit_without_utf8()
-    }
+  document.addEventListener 'turbolinks:load', ->
+    $("#term").autocomplete {
+      source: src,
+      select: (event, ui) ->
+        if ui.item
+          $("#term").val(ui.item.value)
+          submit_without_utf8()
+      }
 
   # clean the url while searching words with enter key
   $("#term").keydown (event) ->
@@ -29,7 +30,7 @@ $ ->
       submit_without_utf8()
 
   # add a new word by clicking the plus sign
-  $(".add-word").click ->
+  $(document).on 'click', '.add-word', ->
     if $("#term").val()
       authtoken = $("meta[name=csrf-token]").attr("content")
       hidden_token = "<input name='authenticity_token' type='hidden' \
@@ -39,7 +40,7 @@ $ ->
       $("#search-form").submit()
 
   # play the pronunciation by clicking the ipa button
-  $("#main").on "click", "button.bt", ->
+  $(document).on 'click', 'button.bt', ->
     pron = $(this).children("audio")[0]
     pron.play()
 
