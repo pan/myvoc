@@ -5,33 +5,29 @@ require 'test_helper'
 class UploadsControllerTest < ActionController::TestCase
   test 'upload nothing' do
     user_on
-    post :upload
-    assert_redirected_to root_path
-    refute_empty flash[:notice]
+    post :upload, xhr: true
+    refute_empty @response.body
   end
 
   test 'file type' do
     user_on
-    post :upload, params: { list: up_file('application/word') }
-    assert_redirected_to root_path
-    assert_equal 'Only plain text file can be uploaded.', flash[:notice]
+    post :upload, params: { list: up_file('application/word') }, xhr: true
+    assert_match /Only plain text file can be uploaded./, @response.body
   end
 
   test 'file size' do
     user_on
     uploadfile = empty_file
-    post :upload, params: { list: uploadfile }
-    assert_redirected_to root_path
+    post :upload, params: { list: uploadfile }, xhr: true
     message = "File size: #{uploadfile.size} is not in the allowed " \
-         'range [1,10M].'
-    assert_equal message, flash[:notice]
+         'range \[1,10M\]'
+    assert_match Regexp.new(message), @response.body
   end
 
   test 'upload file' do
     login_tester
-    post :upload, params: { list: up_file }
-    assert_redirected_to root_path
-    assert flash[:notice].include? 'uploaded'
+    post :upload, params: { list: up_file }, xhr: true
+    assert_match /uploaded/, @response.body
   end
 
   test 'filetext clean' do
