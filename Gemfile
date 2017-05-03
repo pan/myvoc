@@ -43,6 +43,7 @@ gem 'rails-controller-testing', group: :test
 
 # Use Capistrano for deployment
 # gem 'capistrano', group: :development
+gem 'listen', group: :development
 
 # Use debugger
 gem 'byebug', group: [:development, :test]
