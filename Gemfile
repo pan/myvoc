@@ -71,3 +71,4 @@ gem 'omniauth-github'
 
 gem 'puma'
 gem 'remotipart'
+gem 'bootstrap'
