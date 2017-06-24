@@ -23,35 +23,36 @@
       <% end %>
     <% end %>
   </span>
-  <div id="darea" class="<%=' twocol' if definitions.count > 1 %>">
+  <div id="darea" class="row">
     <% definitions.each do |defi| %>
-    <div class="dblock" id="<%#= defi.id %>">
-      <span class="di-head">
-        <b><span class="guided_word"><%= defi[:category] %></span></b>
-        <span class="part_of_speech"><%= defi[:pos] %></span>
-      </span>
-      <div class="explanations">
-        <% defi[:sense].each do |exp| %>
-        <span class="explanation">
-          <span class="meaning"><%= exp[:meaning] %></span>
-          <dl class="example">
-            <% exp[:eg]&.each do |exm| %>
-              <dd class="sentence">- <%= exm %>
-                <span class="usage"><%#= exm[:usage] %></span>
-              </dd>
-            <% end %>
-          </dl>
-          <span class="level"><%= level_name exp[:level] %></span>
-          <span class="usage"><%= exp[:usage] %></span>
-          <span class="synonym"><%= exp[:synonym] %></span>
-          <span class="opposite"><%= exp[:opposite] %></span>
-          <span class="region"><%= exp[:region] %></span>
-          <span class="gc"><%= exp[:code] %></span>
+      <div class="dblock col-md-12
+        col-lg-<%= definitions.count > 1 ? '6' : '12'%>">
+        <span class="di-head">
+          <b><span class="guided_word"><%= defi[:category] %></span></b>
+          <span class="part_of_speech"><%= defi[:pos] %></span>
         </span>
-        <% end %>
+        <div class="explanations">
+          <% defi[:sense].each do |exp| %>
+            <span class="explanation">
+              <span class="meaning"><%= exp[:meaning] %></span>
+              <dl class="example">
+                <% exp[:eg]&.each do |exm| %>
+                  <dd class="sentence">- <%= exm %>
+                <span class="usage"><%#= exm[:usage] %></span>
+                  </dd>
+                <% end %>
+              </dl>
+              <span class="level"><%= level_name exp[:level] %></span>
+              <span class="usage"><%= exp[:usage] %></span>
+              <span class="synonym"><%= exp[:synonym] %></span>
+              <span class="opposite"><%= exp[:opposite] %></span>
+              <span class="region"><%= exp[:region] %></span>
+              <span class="gc"><%= exp[:code] %></span>
+            </span>
+          <% end %>
+        </div>
       </div>
-    </div>
-  <% end %>
+    <% end %>
   </div>
 <% end %>
 </div>

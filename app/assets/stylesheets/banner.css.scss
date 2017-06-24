@@ -11,36 +11,30 @@ $blur: 5px;
     text-decoration: none;
     color: purple;
   }
-  h1 {
-    margin-top: 0;
-    margin-bottom: 0;
-  }
   #m {
     font-size: larger;
+    font-weight: bold;
     margin-left: 3%;
   }
   #y {
     font-size: 160%;
+    font-weight: bold;
     position: relative;
     top: 10px;
   }
   #text {
     font-style: italic;
-  }
-  .username {
-    position: absolute;
-    bottom: 33px;
-    right: 5px;
+    font-weight: 600;
   }
   .bar {
     background-color: lightblue;
     padding: 4px;
-    height: 20px;
+    height: 30px;
     .on-off-button {
       float: right;
       margin: auto;
       margin-left: 4px;
-      width: 7vw;
+      width: 12ch;
       height: 100%;
       background-color: white;
       border-radius: 0.9em;

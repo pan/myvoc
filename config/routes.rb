@@ -1,10 +1,12 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
-
+  concern :paginatable do
+    get '(page/:page)', action: :index, on: :collection, as: ''
+  end
   get 'words/suggested/' => 'words#suggested'
   post 'uploads/upload'  => 'uploads#upload'
-  resources :words
+  resources :words, concerns: :paginatable
   controller :users do
     get 'auth/:provider/callback' => :create
     get 'auth/failure'  => :failure

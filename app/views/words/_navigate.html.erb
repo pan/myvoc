@@ -1,11 +1,5 @@
-<div class="search">
-  <%= form_tag words_path, method: 'get', id: 'search-form' do %>
-    <%= text_field_tag :term, params[:term], class: "wordinput", 
-      placeholder: "search/add a word", title: "Regex enabled" %>
-  <% end %>
-</div>
-<div id="word-box">
-  <span id="word-list">
+<div id="word-box" class='row'>
+  <div id="word-list" class='col-sm-10 col-md-8'>
   <% unless @words.empty? %>
     <% @words.each { |word| %>
       <li class="item">
@@ -17,18 +11,17 @@
       </li>
     <% } %>
   <% end %>
-  </span>
-  <span id="letter-nav">
-  <% 'a'.upto('z') do |c| %>
-    <li>
-    <%= link_to c, words_path(term: "^[#{c}#{c.upcase}]"), class: "letter",
-      title: "words beginning with letter #{c}" %>
-    </li>
-  <% end %>
-  </span>
-</div>
-<div class="word-pages">
-  <%= paginate @words %>
-  <%= content_tag "span", how_many(@word_count), id: "word-count", 
-    title: "total words" %>
+  </div>
+  <div class='col-sm-2 col-md-4 hidden-xs-down'>
+    <div id="letter-nav">
+    <% 'a'.upto('z') do |c| %>
+      <li>
+      <%= link_to c, words_path(term: "^[#{c}#{c.upcase}]"), class: "letter",
+        title: "words beginning with letter #{c}" %>
+      </li>
+    <% end %>
+    </div>
+  </div>
+  <%= content_tag "div", how_many(@word_count), id: "word-count",
+    title: "total words", class: 'col' %>
 </div>

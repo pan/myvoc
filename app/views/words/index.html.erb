@@ -1,24 +1,48 @@
-<nav class="navigation">
-  <%= render 'navigate' %>
-</nav>
-
-<%= content_tag "span", "+", class: "add-word admin #{hide_admin}", 
-  title: "add a new word" %>
-<%= content_tag "span", notice, class: "notice" %>
-<%= content_tag 'span', '', id: 'word-added-notice' %>
-
-<%= form_tag uploads_upload_path, id: "words-upload", multipart: true,
-  remote: true, class: "admin #{hide_admin}" do %>
-  <%= label_tag :list, "words list:" %>
-  <%= file_field_tag :list, accept: 'text/plan' %>
-  <%= submit_tag "upload", title: "one word or phrase on every line" %>
-<% end %>
-
 <%= content_tag "span", id: "oauth" do %>
   <%= link_to image_tag("google.png", title: 
                         "Sign in with your Google account"), "auth/google" %>
   <%= link_to image_tag("github.png", title:
                         "Sign in with your GitHub account"), "auth/github" %>
 <% end %>
+<div class="row">
+  <div class="col-sm-12 col-md-4">
+    <%= form_tag words_path, method: 'get', id: 'search-form',
+      class: 'form-inline' do %>
+      <div class='input-group'>
+        <%=text_field_tag :term, params[:term], class: "form-control",
+          placeholder: "search/add a word", title: "Regex enabled" %>
+        <%= content_tag "span", "+", class: "input-group-addon add-word admin
+          #{hide_admin}", title: "add a new word" %>
+      </div>
+    <% end %>
+  </div>
 
-<%= render 'definition' %>
+  <div class="col-sm-12 col-md-8">
+    <%= form_with url: uploads_upload_path(format: :js), id: "words-upload",
+      local: false, class: "admin #{hide_admin} form-inline" do |f| %>
+      <%= f.label :list, nil, class: 'custom-file col-sm-12 col-md-9' do %>
+        <%= f.file_field :list, accept: 'text/plan',
+          class: 'custom-file-input',
+          title: 'one word or phrase on every line' %>
+        <span class='custom-file-control'
+            data-content='Choose word list file...'></span>
+      <% end %>
+      <%= f.submit 'upload', title: 'add a batch of words',
+          class: 'btn btn-primary btn-sm col-sm-12 col-md-3' %>
+    <% end %>
+  </div>
+</div>
+
+<div class='row'>
+  <div class='col-xs-12 col-sm-4 col-lg-3 navigation'>
+    <%= render 'navigate' %>
+  </div>
+
+  <div class='col-xs-12 col-sm-8 col-lg-9'>
+    <%= render 'definition' %>
+  </div>
+
+  <div class="col-sm-12 word-pages">
+    <%= paginate @words %>
+  </div>
+</div>

@@ -17,7 +17,7 @@
   float: right;
   display: none;
   margin-right: 4px;
-  width: 7vw;
+  width: 7ch;
   text-align: center;
   background-color: lightblue;
   box-shadow: 1px 1px 3px 1px gray;
@@ -25,19 +25,13 @@
     margin-top: 2px;
   }
 }
-$nav_width: 12vw;
-$nav_left: 0.5vw;
+$nav_width: 20ch;
+$nav_left: 1ch;
 .navigation {
-  float: left;
-  width: $nav_width;
-  margin-left: $nav_left;
-  margin-top: 0.3vh;
   #word-box {
     a { text-decoration: none; }
     min-height: 25pc;
     #word-list {
-      float: left;
-      width: 11vw;
       .delsym {
         color: red;
         font-size: 0.9em;
@@ -54,9 +48,8 @@ $nav_left: 0.5vw;
         font-weight: bold;
       }
     }
-    $letter_nav_width: 10px;
+    $letter_nav_width: 12px;
     #letter-nav {
-      float: right;
       width: $letter_nav_width;
       background-color: wheat;
       border-left-style: solid;
@@ -66,10 +59,9 @@ $nav_left: 0.5vw;
       text-align: center;
       li {
         list-style-type: none; 
-        line-height: 2.8vh;
         min-height: 16px;
         height: 17px;
-        max-height: 18px;
+        max-height: 20px;
       }
       .letter {
         padding: 0;
@@ -78,50 +70,20 @@ $nav_left: 0.5vw;
     }
   }
 }
-.search {
-  border: dotted;
-  border-width: 1px;
-  .wordinput {
-    border: none;
-    width: $nav_width;
-    background: none;
-  }
-}
-.word-pages {
-  text-align: center;
-  #word-count {
-    font-size: 0.8em;
-  }
+#word-count {
+  font-size: 0.8em;
 }
 #dcontainer {
-  margin-left: $nav_width+$nav_left;
   margin-top: 3vh;
   text-align: center;
   .word {
     color: blue;
     font-weight: bold;
-/*
-@media screen and max-width:599px
-    column-span: all;           // firefox bug 616436
-    -moz-column-span: all;
-*/
-  }
-  .twocol {
-    columns: 2;
-    -moz-columns: 2;              // firefox bug 698783
-    -webkit-columns: 2;
-    column-gap: 3px;
-    -moz-column-gap: 3px;
-    -webkit-column-gap: 3px;
   }
   #darea {
     .dblock {
-      width: 38vw;
-      margin-top: 0.25vw;
       display: inline-block;
       text-align: left;
-      border: dotted;
-      border-width: 1px;
       font-family: Cursive;
       .bt {
         padding:0;
@@ -173,4 +135,7 @@ ul.ui-autocomplete {
 }
 .ui-helper-hidden-accessible {
   display: none;
+}
+.custom-file-control::after {
+  content: attr(data-content) !important;
 }

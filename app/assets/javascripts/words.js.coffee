@@ -47,3 +47,9 @@ $ ->
   # handle the word delete event data
   $(".delsym").on "ajax:success", (e, deleted, status, xhr) ->
     $("##{deleted.id}").parent().remove()
+
+  # handle word list upload event
+  $("input[type=file]").change ->
+    filename = $(this).val().replace(/.*[\/\\]/, '')
+    if filename?
+      $(this).next(".custom-file-control").attr('data-content', filename)

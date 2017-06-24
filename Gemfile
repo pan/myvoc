@@ -71,4 +71,5 @@ gem 'omniauth-github'
 
 gem 'puma'
 gem 'remotipart'
+gem 'rails-assets-tether'
 gem 'bootstrap'
