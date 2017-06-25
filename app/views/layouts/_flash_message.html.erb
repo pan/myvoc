@@ -1,0 +1,15 @@
+<%
+  msgs = []
+  msgs << { content: notice, type: 'info' } if notice.present?
+  msgs << { content: alert, type: 'danger' } if alert.present?
+%>
+<% msgs.each do |msg| %>
+  <div class='alert alert-<%= msg[:type] %> alert-dismissible opacity8
+    text-center' role='alert'>
+    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+      <span aria-hidden='true'>&times;</span>
+    </button>
+    <%= msg[:content] %>
+    <%= content_tag 'span', '', id: 'word-added-notice', class: 'text-success'%>
+  </div>
+<% end %>

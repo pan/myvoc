@@ -19,7 +19,7 @@ $ ->
 
   class LogonOff extends Switch
     turn_off: ->
-      $.get "logout"
+      $.get "/logout"
       super
       $(".username").text("")
       $("#oauth").hide()
@@ -34,13 +34,13 @@ $ ->
     reqon  = {"req": "on"}
     reqoff = {"req":"off"}
     turn_off: ->
-      $.get "admin.json", reqoff, (res) ->
+      $.get "/admin.json", reqoff, (res) ->
         $(".notice").text(res)
       $(".admin").hide()
       super
       @stat.text "Admin off"
     turn_on: ->
-      $.get "admin.json", reqon, (res) ->
+      $.get "/admin.json", reqon, (res) ->
         $(".notice").text(res)
       $(".admin").show()
       super

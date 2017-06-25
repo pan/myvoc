@@ -5,8 +5,8 @@ class UploadsController < ApplicationController
   before_action :authenticate, only: :upload
 
   def upload
-    @message = verify_param
-    @message = add_to_job if @message.empty?
+    message = verify_param
+    message.empty? ? add_to_job : flash.now.alert = message
   end
 
   private
@@ -15,9 +15,10 @@ class UploadsController < ApplicationController
     words = clean(filetext)
     if words
       Task.upload(current_user, words)
-      "#{filename} uploaded, adding #{words.size} words..."
+      flash.now[:notice] = "#{filename} uploaded, adding #{words.size} \
+        #{'word'.pluralize(words.size)}..."
     else
-      "No valid word found in the uploaded file #{filename}."
+      flash.now[:alert] = "No valid word found in the uploaded file #{filename}"
     end
   end
 

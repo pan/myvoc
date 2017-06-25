@@ -1,7 +1,6 @@
 <div class="banner">
-  <div class="fixed-top row">
-  <%= content_tag "span", notice, class: "notice col-5 offset-3 offset-md-6" %>
-  <%= content_tag 'span', '', id: 'word-added-notice' %>
+  <div id='notice-box' class='fixed-top'>
+    <%= render 'layouts/flash_message' %>
   </div>
 
   <div class='row'>

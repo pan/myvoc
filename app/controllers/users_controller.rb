@@ -18,7 +18,7 @@ class UsersController < ApplicationController
 
   # when a user fails to login
   def failure
-    redirect_to root_url, notice: params[:message]
+    redirect_to root_url, alert: params[:message]
   end
 
   # turn admin on/off
