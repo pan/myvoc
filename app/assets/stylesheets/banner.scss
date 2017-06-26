@@ -1,7 +1,11 @@
+.circle::before {
+  content: '\26ab';
+  color: inherit;
+  text-shadow: none;
+}
 $h-shadow: 5px;
 $v-shadow: 5px;
 $blur: 5px;
-
 .banner {
   position: relative;
   font-family: "Comic Sans MS";
@@ -28,8 +32,8 @@ $blur: 5px;
   }
   .bar {
     background-color: lightblue;
-    padding: 4px;
-    height: 30px;
+    padding: 3px;
+    height: 32px;
     .on-off-button {
       float: right;
       margin: auto;

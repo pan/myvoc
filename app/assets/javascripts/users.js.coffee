@@ -37,6 +37,7 @@ $ ->
       $.get "/admin.json", reqoff, (res) ->
         $(".notice").text(res)
       $(".admin").hide()
+      $('#notice-channel-status').hide()
       super
       @stat.text "Admin off"
     turn_on: ->
