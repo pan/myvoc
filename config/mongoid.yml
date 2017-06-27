@@ -153,9 +153,9 @@ test:
 production:
   clients:
     default:
-      database: myvoc_prod
-      hosts:
-        - localhost:27017
+#      database: myvoc_prod
+#      hosts:
+#        - localhost:27017
       uri: <%= ENV['MONGODB_URI'] %>
       options:
         read:
