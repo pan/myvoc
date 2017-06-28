@@ -11,7 +11,7 @@
       <% end %>
     </span>
     <%= content_tag "span",
-      class: "align-self-end col-sm-12 col-md-4 text-right" do %>
+      class: "align-self-end col-sm-12 col-md-4 text-right username" do %>
       <% if login? %>
         <%= User.fullname(session[:user_id]) %>
       <% end %>

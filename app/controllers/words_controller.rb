@@ -52,7 +52,7 @@ class WordsController < ApplicationController
   # otherwise the scope is all words in DB
   def search_word
     @words =
-      if login? && current_user.words.exists?
+      if login?
         current_user.words.search params[:term]
       else
         Word.search params[:term]
