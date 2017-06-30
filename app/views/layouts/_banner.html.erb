@@ -19,7 +19,9 @@
   </div>
   <div class="bar purple-box">
     <span id='notice-channel-status' class='text-muted <%= hide_admin %>'>
-      <span class='circle'></span>
+      <span class='circle' data-toggle='tooltip' data-placement='right'
+       title='WebSocket(ActionCable) connectivity status indicator:
+       green - connected, red - disconnected, gray - unknown'></span>
     </span>
     <div id="log-button" class="on-off-button" data-turbolinks-permanent>
       <%= content_tag "span", id: "log-status", 

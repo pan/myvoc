@@ -6,3 +6,9 @@
 //= require jquery.remotipart
 //= require turbolinks
 //= require_tree .
+
+/* enable tooltip until v4 is offically released with pull 21743
+$(function() {
+  $('[data-toggle="tooltip"]').tooltip()
+})
+*/

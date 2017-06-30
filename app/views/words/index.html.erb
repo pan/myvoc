@@ -9,8 +9,9 @@
     <%= form_tag words_path, method: 'get', id: 'search-form',
       class: 'form-inline' do %>
       <div class='input-group'>
-        <%=text_field_tag :term, params[:term], class: "form-control",
-          placeholder: "search/add a word", title: "Regex enabled" %>
+        <%= text_field_tag :term, params[:term], class: "form-control",
+          data: { toggle: 'tooltip' }, placeholder: "search/add a word",
+          title: "Regex enabled" %>
         <%= content_tag "span", "+", class: "input-group-addon add-word admin
           #{hide_admin}", title: "add a new word" %>
       </div>
